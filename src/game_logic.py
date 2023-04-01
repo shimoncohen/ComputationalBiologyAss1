@@ -24,9 +24,3 @@ class GameLogic:
             for c in range(col - 1, col + 2)
             if r != row or c != col
         ]
-    
-
-a = np.array([[True, False, False], 
-              [True, False, True], 
-              [False, False, False]])
-print(GameLogic._count_rumors(GameLogic(True), a, 0, 0))
