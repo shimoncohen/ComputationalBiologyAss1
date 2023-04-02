@@ -34,3 +34,11 @@ class Board:
     
     def print(self):
         print(self.rumor_board)
+        # rows, cols = self.people.shape
+        # for r in range(rows):
+        #     for c in range(cols):
+        #         if self.people[r, c] is not None:
+        #             print(self.people[r, c].doubt_level, end=' ')
+        #         else:
+        #             print(None, end=' ')
+        #     print()
