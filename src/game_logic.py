@@ -1,11 +1,10 @@
 import numpy as np
-from dimensions import clip, remove_exeeding
+from dimensions import clip, wrap
 
 class GameLogic:
     def __init__(self, wrap_around: bool) -> None:
         self.wrap_around: bool = wrap_around
-        self.mode: str = 'wrap' if wrap_around else 'clip'
-        self.idx_func: function = clip if self.wrap_around else remove_exeeding
+        self.idx_func: function = wrap if self.wrap_around else clip
 
     def run_once(people: np.array, rumors: np.array) -> np.array:
         pass
