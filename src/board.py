@@ -6,6 +6,16 @@ class Board:
         self.L = L
         self.p = p
         self.game_logic = GameLogic(wrap_around)
+        self.generation = 0
         
         self.rumor_board = np.full((row, col), False)
         self.people = np.full((row, col), None)
+
+    def get_rumors(self) -> np.array:
+        return self.rumor_board
+
+    def get_people(self) -> np.array:
+        return self.people
+    
+    def run_once() -> None:
+        pass
