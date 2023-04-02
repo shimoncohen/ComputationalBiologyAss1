@@ -2,6 +2,30 @@ import pytest
 from src import person
 
 class TestPerson:
+    def test_activate_cooldown(self):
+        p = person.Person(person.DoubtLevel.S1, 1)
+        assert p.cooldown == 0
+
+        p.activate_cooldown()
+        assert p.cooldown > 0
+
+    @pytest.mark.parametrize(
+        "cooldown",
+        [
+            pytest.param(5),
+            pytest.param(3),
+            pytest.param(12),
+        ],
+    )
+    def test_update_cooldown(self, cooldown):
+        p = person.Person(person.DoubtLevel.S1, cooldown)
+        assert p.cooldown == 0
+        
+        p.activate_cooldown()
+        for _ in range(cooldown):
+            assert p.cooldown > 0
+            p.update_cooldown()
+
     @pytest.mark.parametrize(
         "doubt_level,cooldown,num_neighbours,ans_after_cooldown",
         [

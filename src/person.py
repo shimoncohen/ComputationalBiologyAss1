@@ -8,12 +8,6 @@ class DoubtLevel(IntEnum):
     S2 = 2,
     S1 = 3
 
-    # def __index__(self):
-    #     return self.value[0]
-
-    # def __int__(self):
-    #     return self.value[0]
-
     def get_probability(doubt_level: int) -> float:
         size = len(DoubtLevel)
         intervals = np.linspace(0, 1, size)
