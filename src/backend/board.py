@@ -1,21 +1,30 @@
 import random
 import numpy as np
 from backend.game_logic import GameLogic
+from loader.board_loader import BoardLoader
 
 class Board:
-    def __init__(self, rows: int, cols: int, L: int, p: float, wrap_around: bool, doubt_probs: list[int]) -> None:
+    def __init__(self, wrap_around: bool, L: int) -> None:
         self.L = L
-        self.p = p
         self.game_logic = GameLogic(wrap_around)
         self.generation = 0
-        
+
+        self.rumor_board = None
+        self.people = None
+
+    def initialize(self, rows: int, cols: int, p: float, doubt_probs: list[int]) -> None:
         self.rumor_board = np.full((rows, cols), False)
         self.people = np.full((rows, cols), None)
-        self.game_logic.initialize_people(self.people, self.p, self.L, doubt_probs)
-
+        self.game_logic.initialize_people(self.people, p, self.L, doubt_probs)
+        self._initialize_random_rumor(rows, cols)
+    
+    def _initialize_random_rumor(self, rows, cols) -> None:
         # Initialize one random person to spread rumor
         row, col = random.randrange(rows), random.randrange(cols)
         self.rumor_board[row, col] = True
+    
+    def load(self, path: str) -> None:
+        self.rumor_board, self.people = BoardLoader.Load(path)
 
     def get_rumors(self) -> np.array:
         return self.rumor_board
