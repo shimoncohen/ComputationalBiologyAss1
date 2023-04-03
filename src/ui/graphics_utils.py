@@ -2,7 +2,7 @@ import string
 
 import pygame as pg
 
-from colors import BLACK_COLOR
+from .colors import BLACK_COLOR
 
 pg.init()
 COLOR_INACTIVE = pg.Color('lightskyblue3')
@@ -22,7 +22,7 @@ class InputBox:
         self.active = False
         self.value = 0
 
-    def handle_event(self, event):
+    def handle_event(self, event) -> None:
         if event.type == pg.MOUSEBUTTONDOWN:
             # If the user clicked on the input_box rect.
             if self.rect.collidepoint(event.pos):
@@ -41,17 +41,20 @@ class InputBox:
                 # Re-render the text.
                 self.txt_surface = self.font.render(self.text, True, BLACK_COLOR)
 
-    def update(self):
+    def update(self) -> None:
         # Resize the box if the text is too long.
         width = max(200, self.txt_surface.get_width()+10)
         self.rect.w = width
 
-    def draw(self, screen):
+    def draw(self, screen) -> None:
         # Blit the text.
         screen.blit(self.label_surface, (self.rect.x-120, self.rect.y+10))
         screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
         # Blit the rect.
         pg.draw.rect(screen, self.color, self.rect, 2, border_radius=7)
 
-    def set_value(self):
-        self.value = float(self.text)
+    def set_value(self) -> None:
+        try:
+            self.value = float(self.text)
+        except ValueError:
+            return

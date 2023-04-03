@@ -1,6 +1,6 @@
 import pygame as pg
 
-from colors import RED_COLOR, WHITE_COLOR
+from .colors import RED_COLOR, WHITE_COLOR
 
 pg.init()
 
