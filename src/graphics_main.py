@@ -5,15 +5,15 @@ from ui.grid_window import GridWindow
 
 pygame.init()
 
-h = 800
+h = 600
 w = 600
-screen = pygame.display.set_mode((h, w))
+screen = pygame.display.set_mode((w, h))
 
 curr_window = MenuWindow(h, w, screen)
 
 while curr_window.game_on:
     if curr_window.change_window:
-        curr_window = GridWindow(h, w, screen, curr_window.grid_size_input_box, 50, None)
+        curr_window = GridWindow(h, w, screen, curr_window.grid_size_input_box.value, 40, None)
 
     for event in pygame.event.get():
         curr_window.render(event)

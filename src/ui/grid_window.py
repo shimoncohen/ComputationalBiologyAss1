@@ -18,7 +18,7 @@ class GridWindow(Window):
         self.display_offset = display_offset
         self.board = board
 
-        self.block_h = int(self.h - self.display_offset / self.n_blocks)
+        self.block_h = int((self.h - self.display_offset) / self.n_blocks)
         self.block_w = int(self.w / self.n_blocks)
 
         self.change_window = False
@@ -26,10 +26,13 @@ class GridWindow(Window):
     def drawGrid(self) -> None:
         self.screen.fill(WHITE_COLOR)
 
-        for x in range(0, self.h, self.block_h):
-            for y in range(0, self.w, self.block_w):
-                rect = pg.Rect(x, y, self.block_h, self.block_w)
+        for x in range(0, self.w, self.block_w):
+            for y in range(self.display_offset, self.h, self.block_h):
+                rect = pg.Rect(x, y, self.block_w, self.block_h)
                 pg.draw.rect(self.screen, BLACK_COLOR, rect, 1)
+
+        r=pg.Rect(790, 590, 10, 10)
+        pg.draw.rect(self.screen, BLACK_COLOR, r)
 
         self._color_people()
         self._color_rumors()
@@ -42,5 +45,5 @@ class GridWindow(Window):
 
     def render(self, event) -> None:
         super().render(event)
-        self.board.run_once()
+        # self.board.run_once()
         self.drawGrid()

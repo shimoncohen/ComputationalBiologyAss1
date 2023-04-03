@@ -17,7 +17,7 @@ class MenuWindow(Window):
             self.grid_size_input_box
         ]
 
-        self.start_button = Button(350, 400, 150, 100, label='START')
+        self.start_button = Button(200, 400, 150, 100, label='START')
         self.change_window = False
 
     def render(self, event):
@@ -39,4 +39,7 @@ class MenuWindow(Window):
             input_box.draw(self.screen)
 
         self.start_button.draw(self.screen)
+
+        if self.start_button.active:
+            self.change_window = True
 
