@@ -2,7 +2,7 @@ import pygame as pg
 
 from .window import Window
 from .colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR
-from src.board import Board
+from backend.board import Board
 
 
 class GridWindow(Window):
@@ -17,35 +17,27 @@ class GridWindow(Window):
         self.n_blocks = int(num_blocks)
         self.display_offset = display_offset
         self.board = Board(self.n_blocks, self.n_blocks, **kwargs)
-
         self.block_h = int((self.h - self.display_offset) / self.n_blocks)
         self.block_w = int(self.w / self.n_blocks)
-
         self.change_window = False
 
     def drawGrid(self) -> None:
         self.screen.fill(WHITE_COLOR)
-
-        for x in range(0, self.w, self.block_w):
-            for y in range(self.display_offset, self.h, self.block_h):
-                rect = pg.Rect(x, y, self.block_w, self.block_h)
-                pg.draw.rect(self.screen, BLACK_COLOR, rect, 1)
-
-        r=pg.Rect(790, 590, 10, 10)
-        pg.draw.rect(self.screen, BLACK_COLOR, r)
-
         self._color_people()
         self._color_rumors()
 
     def _color_people(self) -> None:
+        rows, cols = self.board.people.shape
 
-        for i, x in enumerate(range(0, self.w, self.block_w)):
-            for j, y in enumerate(range(self.display_offset, self.h, self.block_h)):
-                person = self.board.people[i, j]
+        for r in range(rows):
+            for c in range(cols):
+                person = self.board.people[r, c]
+
+                rect = pg.Rect(c * self.block_w, self.display_offset + r * self.block_h, self.block_w, self.block_h)
                 if person:
-                    rect = pg.Rect(x, y, self.block_w, self.block_h)
-                    pg.draw.rect(self.screen, GREEN_COLOR, rect)
-                    pg.draw.rect(self.screen, BLACK_COLOR, rect, 1)
+                    pg.draw.rect(self.screen, RED_COLOR, rect)
+
+                pg.draw.rect(self.screen, BLACK_COLOR, rect, 1)
 
     def _color_rumors(self) -> None:
         pass
