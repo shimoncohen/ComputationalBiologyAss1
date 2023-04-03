@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from game_logic import GameLogic
+from backend.game_logic import GameLogic
 
 class Board:
     def __init__(self, rows: int, cols: int, L: int, p: float, wrap_around: bool, doubt_probs: list[int]) -> None:
@@ -24,8 +24,10 @@ class Board:
         return self.people
     
     def update_cooldown(self):
-        for p in self.people:
-            p.update_cooldown()
+        rows, cols = self.people.shape
+        for r in range(rows):
+            for c in range(cols):
+                self.people[r, c].update_cooldown()
     
     def run_once(self) -> None:
         self.update_cooldown()

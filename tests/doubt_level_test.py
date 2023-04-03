@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from src import person
+from src.backend import person
 
 class TestDoubtLevel:
     @pytest.mark.parametrize(

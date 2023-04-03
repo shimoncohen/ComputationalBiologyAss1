@@ -1,5 +1,5 @@
 import pytest
-from src import dimensions
+from src.backend import dimensions
 
 class TestDimensions:
     @pytest.mark.parametrize(

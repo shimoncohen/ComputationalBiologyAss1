@@ -1,5 +1,5 @@
 import pytest
-from src import person
+from src.backend import person
 
 class TestPerson:
     def test_activate_cooldown(self):
