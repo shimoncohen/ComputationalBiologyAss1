@@ -45,6 +45,7 @@ class GridWindow(Window):
                 if person:
                     rect = pg.Rect(x, y, self.block_w, self.block_h)
                     pg.draw.rect(self.screen, GREEN_COLOR, rect)
+                    pg.draw.rect(self.screen, BLACK_COLOR, rect, 1)
 
     def _color_rumors(self) -> None:
         pass
