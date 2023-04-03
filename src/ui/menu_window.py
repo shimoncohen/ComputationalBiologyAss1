@@ -7,9 +7,9 @@ from .colors import WHITE_COLOR
 class MenuWindow(Window):
     def __init__(self, h, w, screen):
         super().__init__(h, w, screen)
-        self.L_input_box = InputBox(170, 100, 50, 40, label="L:")
-        self.p_input_box = InputBox(170, 150, 50, 40, label='P:')
-        self.grid_size_input_box = InputBox(170, 200, 50, 40, label='Grid Size:')
+        self.L_input_box = InputBox(170, 100, 50, 40, label="L:", text='5')
+        self.p_input_box = InputBox(170, 150, 50, 40, label='P:', text='0.5')
+        self.grid_size_input_box = InputBox(170, 200, 50, 40, label='Grid Size:', text='100')
 
         self.input_boxes = [
             self.L_input_box,

@@ -4,16 +4,15 @@ import pygame as pg
 
 from .colors import BLACK_COLOR
 
-pg.init()
 COLOR_INACTIVE = pg.Color('lightskyblue3')
 COLOR_ACTIVE = pg.Color('dodgerblue2')
 
 
 class InputBox:
-    def __init__(self, x, y, w, h, font_size=32, label=''):
+    def __init__(self, x, y, w, h, font_size=32, label='', text=''):
         self.rect = pg.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
-        self.text = ''
+        self.text = text
         self.label = label
         self.font_size = font_size
         self.font = pg.font.Font(None, self.font_size)
@@ -58,3 +57,8 @@ class InputBox:
             self.value = float(self.text)
         except ValueError:
             return
+
+
+class TickBox:
+    def __init__(self):
+        self.active = False
