@@ -13,7 +13,10 @@ curr_window = MenuWindow(h, w, screen)
 
 while curr_window.game_on:
     if curr_window.change_window:
-        curr_window = GridWindow(h, w, screen, curr_window.grid_size_input_box.value, 40, None)
+        curr_window = GridWindow(h, w, screen,
+                                 curr_window.grid_size_input_box.value,
+                                 display_offset=40, wrap_around=False, L=10,
+                                 p=0.5, doubt_probs=[0, 1/3, 2/3, 1])
 
     for event in pygame.event.get():
         curr_window.render(event)

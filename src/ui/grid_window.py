@@ -1,7 +1,7 @@
 import pygame as pg
 
 from .window import Window
-from .colors import BLACK_COLOR, WHITE_COLOR
+from .colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR
 from src.board import Board
 
 
@@ -11,12 +11,12 @@ class GridWindow(Window):
                  screen: pg.display,
                  num_blocks: int,
                  display_offset: int,
-                 board: Board
+                 **kwargs
                  ):
         super().__init__(h, w, screen)
-        self.n_blocks = num_blocks
+        self.n_blocks = int(num_blocks)
         self.display_offset = display_offset
-        self.board = board
+        self.board = Board(self.n_blocks, self.n_blocks, **kwargs)
 
         self.block_h = int((self.h - self.display_offset) / self.n_blocks)
         self.block_w = int(self.w / self.n_blocks)
@@ -38,7 +38,13 @@ class GridWindow(Window):
         self._color_rumors()
 
     def _color_people(self) -> None:
-        pass
+
+        for i, x in enumerate(range(0, self.w, self.block_w)):
+            for j, y in enumerate(range(self.display_offset, self.h, self.block_h)):
+                person = self.board.people[i, j]
+                if person:
+                    rect = pg.Rect(x, y, self.block_w, self.block_h)
+                    pg.draw.rect(self.screen, GREEN_COLOR, rect)
 
     def _color_rumors(self) -> None:
         pass
