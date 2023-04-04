@@ -1,7 +1,7 @@
 from .window import Window
-from .graphics_utils import InputBox
+from .graphics_utils import InputBox, CheckBox
 from .shapes import Button
-from .colors import WHITE_COLOR
+from .colors import WHITE_COLOR, BLACK_COLOR
 
 
 class MenuWindow(Window):
@@ -10,6 +10,7 @@ class MenuWindow(Window):
         self.L_input_box = InputBox(170, 100, 50, 40, label="L:", text='5')
         self.p_input_box = InputBox(170, 150, 50, 40, label='P:', text='0.5')
         self.grid_size_input_box = InputBox(170, 200, 50, 40, label='Grid Size:', text='100')
+        self.checkbox = CheckBox(220, 250, 40, 40, 32, BLACK_COLOR, label='Wrap Around: ')
 
         self.input_boxes = [
             self.L_input_box,
@@ -27,6 +28,7 @@ class MenuWindow(Window):
             input_box.handle_event(event)
             input_box.update()
 
+        self.checkbox.handle_event(event)
         self.start_button.handle_event(event)
 
         if self.start_button.active:
@@ -38,10 +40,13 @@ class MenuWindow(Window):
         for input_box in self.input_boxes:
             input_box.draw(self.screen)
 
+        self.checkbox.draw(self.screen)
         self.start_button.draw(self.screen)
 
         if self.start_button.active:
             self.change_window = True
 
     def get_boxes_vals(self):
-        return {b.get_name(): b.get_value() for b in self.input_boxes}
+        d = {b.get_name(): b.get_value() for b in self.input_boxes}
+        d.update(self.checkbox.get_status())
+        return d

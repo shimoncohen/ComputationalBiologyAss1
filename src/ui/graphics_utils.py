@@ -65,6 +65,45 @@ class InputBox:
         return self.label.replace(':', '')
 
 
-class TickBox:
-    def __init__(self):
-        self.active = False
+class CheckBox:
+    def __init__(self,
+                 x: int,
+                 y: int,
+                 h: int,
+                 w: int,
+                 font_size: int,
+                 color: pg.color.Color,
+                 label: str = ''
+                 ):
+        self.checked = False
+        self.x = x
+        self.y = y
+        self.h = h
+        self.w = w
+        self.label = label
+        self.rect = pg.Rect(x, y, w, h)
+        self.inner_rect = pg.Rect(x + 5, y + 5, w - 10, h - 10)
+        self.color = color
+        self.label = label
+        self.font_size = font_size
+        self.font = pg.font.Font(None, self.font_size)
+        self.label_surface = self.font.render(self.label, True, BLACK_COLOR)
+
+    def draw(self, screen):
+        # Blit the text.
+        screen.blit(self.label_surface, (self.rect.x - 170, self.rect.y + 10))
+        # Blit the rect.
+        pg.draw.rect(screen, self.color, self.rect, 2, border_radius=7)
+
+        if self.checked:
+            pg.draw.rect(screen, COLOR_ACTIVE, self.inner_rect, border_radius=7)
+
+    def handle_event(self, event) -> None:
+        if event.type == pg.MOUSEBUTTONDOWN:
+            # If the user clicked on the input_box rect.
+            if self.rect.collidepoint(event.pos):
+                # Toggle the active variable.
+                self.checked = not self.checked
+
+    def get_status(self):
+        return {self.label.replace(':', '').replace(' ', '_').lower(): self.checked}
