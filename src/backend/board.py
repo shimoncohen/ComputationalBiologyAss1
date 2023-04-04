@@ -34,14 +34,14 @@ class Board:
     def load(self, path: str) -> None:
         self.__rumor_board, self.__people = BoardLoader.Load(path)
     
-    def update_cooldown(self):
+    def __update_cooldown(self):
         rows, cols = self.__people.shape
         for r in range(rows):
             for c in range(cols):
                 self.__people[r, c].update_cooldown()
     
     def run_once(self) -> None:
-        self.update_cooldown()
+        self.__update_cooldown()
         self.__rumor_board = self.__game_logic.run_once(self.__people, self.__rumor_board)
         self.generation += 1
     
