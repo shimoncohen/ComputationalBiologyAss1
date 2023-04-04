@@ -58,6 +58,12 @@ class InputBox:
         except ValueError:
             return
 
+    def get_value(self):
+        return self.value
+
+    def get_name(self):
+        return self.label.replace(':', '')
+
 
 class TickBox:
     def __init__(self):

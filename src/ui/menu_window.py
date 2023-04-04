@@ -43,3 +43,5 @@ class MenuWindow(Window):
         if self.start_button.active:
             self.change_window = True
 
+    def get_boxes_vals(self):
+        return {b.get_name(): b.get_value() for b in self.input_boxes}
