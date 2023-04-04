@@ -1,8 +1,9 @@
 import pygame as pg
 
 from .window import Window
-from .colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR
+from .colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR, YELLOW_COLOR
 from backend.board import Board
+from .in_game_menu import InGameMenu
 
 
 class GridWindow(Window):
@@ -21,8 +22,9 @@ class GridWindow(Window):
         self.block_h = int((self.h - self.display_offset) / self.n_blocks)
         self.block_w = int(self.w / self.n_blocks)
         self.change_window = False
+        self.in_game_menu = InGameMenu(26, self.display_offset, w, YELLOW_COLOR)
 
-    def drawGrid(self) -> None:
+    def draw_grid(self) -> None:
         self.screen.fill(WHITE_COLOR)
         self._color_people()
         self._color_rumors()
@@ -46,4 +48,6 @@ class GridWindow(Window):
     def render(self, event) -> None:
         super().render(event)
         # self.board.run_once()
-        self.drawGrid()
+        self.draw_grid()
+        # self.in_game_menu.update()
+        self.in_game_menu.draw(self.screen)

@@ -1,3 +1,4 @@
+from time import sleep
 import pygame
 
 from ui.menu_window import MenuWindow
@@ -23,3 +24,4 @@ while curr_window.game_on:
         curr_window.render(event)
 
     pygame.display.flip()
+    sleep(1)
