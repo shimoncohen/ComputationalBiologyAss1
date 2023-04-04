@@ -6,7 +6,11 @@
 
 Simulating passing rumors between a group of people in an $N \times M$ grid.\
 The density of the population is determined by $P$, a parameter given by the user. This means that clusters of people could be formed (connectivity is not guarenteed).\
+<<<<<<< HEAD
 On the first generation (denote $g=0$) a random person is selected to start a rumor. Each person passes the rumor to his neighbours (8 or 4 depending on strategy). Each person decides if he believes the rumor depending on his type (Explained in the next section). If he decides to believe, the rumor is passes on in the next generation ($g + 1$).
+=======
+On the first generation (denote $g=0$) a random person is selected to start a rumor. Each person passes the rumor to his neighbours (8 or 4 depending on strategy). Each person decides if he believes the rumor depending on his type (Explained in the next section). If he decides to believe, the rumor is passes on in the next generation.
+>>>>>>> de8c5af793af888e12a69f1135de3adfbbb3eda8
 
 ### Types of people
 
