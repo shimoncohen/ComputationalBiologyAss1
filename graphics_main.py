@@ -1,8 +1,8 @@
 from time import sleep
 import pygame
 
-from ui.menu_window import MenuWindow
-from ui.grid_window import GridWindow
+from src.ui.menu_window import MenuWindow
+from src.ui.grid_window import GridWindow
 
 pygame.init()
 

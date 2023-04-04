@@ -1,7 +1,7 @@
 import random
 import numpy as np
-from backend.dimensions import clip, wrap
-from backend.person import DoubtLevel, Person
+from src.backend.dimensions import clip, wrap
+from src.backend.person import DoubtLevel, Person
 
 class GameLogic:
     def __init__(self, wrap_around: bool) -> None:

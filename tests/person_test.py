@@ -1,9 +1,9 @@
 import pytest
-from src.backend import person
+from src.backend.person import Person, DoubtLevel
 
 class TestPerson:
     def test_activate_cooldown(self):
-        p = person.Person(person.DoubtLevel.S1, 1)
+        p = Person(DoubtLevel.S1, 1)
         assert p.cooldown == 0
 
         p.activate_cooldown()
@@ -18,7 +18,7 @@ class TestPerson:
         ],
     )
     def test_update_cooldown(self, cooldown):
-        p = person.Person(person.DoubtLevel.S1, cooldown)
+        p = Person(DoubtLevel.S1, cooldown)
         assert p.cooldown == 0
         
         p.activate_cooldown()
@@ -30,18 +30,18 @@ class TestPerson:
         "doubt_level,cooldown,num_neighbours,ans_after_cooldown",
         [
             pytest.param(
-                person.DoubtLevel.S1, 10, 1, True
+                DoubtLevel.S1, 10, 1, True
             ),
             pytest.param(
-                person.DoubtLevel.S3, 5, 2, False
+                DoubtLevel.S3, 5, 2, False
             ),
             pytest.param(
-                person.DoubtLevel.S4, 7, 1, False
+                DoubtLevel.S4, 7, 1, False
             ),
         ],
     )
     def test_should_pass_rumor_with_cooldown(self, doubt_level, cooldown, num_neighbours, ans_after_cooldown):
-        p = person.Person(doubt_level, cooldown)
+        p = Person(doubt_level, cooldown)
         p.activate_cooldown()
 
         for _ in range(cooldown):
@@ -53,16 +53,16 @@ class TestPerson:
         "doubt_level,num_neighbours,ans",
         [
             pytest.param(
-                person.DoubtLevel.S1, 1, True
+                DoubtLevel.S1, 1, True
             ),
             pytest.param(
-                person.DoubtLevel.S3, 5, False
+                DoubtLevel.S3, 5, False
             ),
             pytest.param(
-                person.DoubtLevel.S4, 8, False
+                DoubtLevel.S4, 8, False
             ),
         ],
     )
     def test_should_pass_rumor(self, doubt_level, num_neighbours, ans):
-        p = person.Person(doubt_level, 0)
+        p = Person(doubt_level, 0)
         assert p.should_pass_rumor(num_neighbours) == ans

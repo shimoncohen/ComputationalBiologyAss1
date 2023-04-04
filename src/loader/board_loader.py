@@ -1,5 +1,5 @@
 import numpy as np
-from backend.person import Person
+from src.backend.person import Person
 
 class BoardLoader:
     @staticmethod

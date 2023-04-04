@@ -21,20 +21,10 @@ The percentage of each type in the population is a parameter decided by the user
 ## Running the program
 
 To run in CLI mode run:
-
->Linux\
->```python src/main.py```
-
->Windows\
->```python src\main.py```
+>```python main.py```
 
 To run in GUI mode run:
-
->Linux\
-```python src/graphics_main.py```
-
->Windows\
->```python src\graphics_main.py```
+>```python graphics_main.py```
 
 ## Understanding the UI
 

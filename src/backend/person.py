@@ -23,6 +23,10 @@ class Person:
     @property
     def doubt_level(self):
         return self.__doubt_level
+    
+    @property
+    def cooldown(self):
+        return self.__cooldown
 
     def should_pass_rumor(self, num_neighbours: int) -> bool:
         p = random.uniform(0, 1)
@@ -37,7 +41,7 @@ class Person:
         return threshold >= p
 
     def activate_cooldown(self):
-        self.cooldown = self.__cooldown_time
+        self.__cooldown = self.__cooldown_time
 
     def update_cooldown(self):
         if self.__cooldown > 0:

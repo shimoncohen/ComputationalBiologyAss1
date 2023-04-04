@@ -1,7 +1,7 @@
 import random
 import numpy as np
-from backend.game_logic import GameLogic
-from loader.board_loader import BoardLoader
+from src.backend.game_logic import GameLogic
+from src.loader.board_loader import BoardLoader
 
 class Board:
     def __init__(self, wrap_around: bool, L: int) -> None:
