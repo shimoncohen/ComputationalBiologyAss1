@@ -2,6 +2,7 @@ import numpy as np
 from backend.person import Person
 
 class BoardLoader:
+    @staticmethod
     def Load(path: str) -> tuple[np.array, np.array, bool]:
         with open(path) as f:
             row, col = f.readline().split()

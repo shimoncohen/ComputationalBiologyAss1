@@ -6,50 +6,44 @@ from loader.board_loader import BoardLoader
 class Board:
     def __init__(self, wrap_around: bool, L: int) -> None:
         self.L = L
-        self.game_logic = GameLogic(wrap_around)
+        self.__game_logic = GameLogic(wrap_around)
         self.generation = 0
 
-        self.rumor_board = None
-        self.people = None
+        self.__rumor_board = None
+        self.__people = None
+    
+    @property
+    def rumor_board(self):
+        return self.__rumor_board
+    
+    @property
+    def people(self):
+        return self.__people
 
     def initialize(self, rows: int, cols: int, p: float, doubt_probs: list[int]) -> None:
-        self.rumor_board = np.full((rows, cols), False)
-        self.people = np.full((rows, cols), None)
-        self.game_logic.initialize_people(self.people, p, self.L, doubt_probs)
-        self._initialize_random_rumor(rows, cols)
+        self.__rumor_board = np.full((rows, cols), False)
+        self.__people = np.full((rows, cols), None)
+        self.__game_logic.initialize_people(self.__people, p, self.L, doubt_probs)
+        self.__initialize_random_rumor(rows, cols)
     
-    def _initialize_random_rumor(self, rows, cols) -> None:
+    def __initialize_random_rumor(self, rows, cols) -> None:
         # Initialize one random person to spread rumor
         row, col = random.randrange(rows), random.randrange(cols)
-        self.rumor_board[row, col] = True
+        self.__rumor_board[row, col] = True
     
     def load(self, path: str) -> None:
-        self.rumor_board, self.people = BoardLoader.Load(path)
-
-    def get_rumors(self) -> np.array:
-        return self.rumor_board
-
-    def get_people(self) -> np.array:
-        return self.people
+        self.__rumor_board, self.__people = BoardLoader.Load(path)
     
     def update_cooldown(self):
-        rows, cols = self.people.shape
+        rows, cols = self.__people.shape
         for r in range(rows):
             for c in range(cols):
-                self.people[r, c].update_cooldown()
+                self.__people[r, c].update_cooldown()
     
     def run_once(self) -> None:
         self.update_cooldown()
-        self.rumor_board = self.game_logic.run_once(self.people, self.rumor_board)
+        self.__rumor_board = self.__game_logic.run_once(self.__people, self.__rumor_board)
         self.generation += 1
     
     def print(self):
-        print(self.rumor_board)
-        # rows, cols = self.people.shape
-        # for r in range(rows):
-        #     for c in range(cols):
-        #         if self.people[r, c] is not None:
-        #             print(self.people[r, c].doubt_level, end=' ')
-        #         else:
-        #             print(None, end=' ')
-        #     print()
+        print(self.__rumor_board)
