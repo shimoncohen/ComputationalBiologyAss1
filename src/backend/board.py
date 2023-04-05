@@ -1,7 +1,7 @@
 import random
 import numpy as np
 from src.backend.game_logic import GameLogic
-from src.loader.board_loader import BoardLoader
+from src.loader.board_file_handler import BoardFileHandler
 
 class Board:
     def __init__(self, wrap_around: bool, L: int) -> None:
@@ -32,7 +32,10 @@ class Board:
         self.__rumor_board[row, col] = True
     
     def load(self, path: str) -> None:
-        self.__rumor_board, self.__people = BoardLoader.Load(path)
+        self.__rumor_board, self.__people = BoardFileHandler.load(path)
+    
+    def save(self, path: str) -> None:
+        BoardFileHandler.save(path, self.L, self.__rumor_board, self.__people)
     
     def __update_cooldown(self):
         rows, cols = self.__people.shape
