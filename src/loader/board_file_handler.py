@@ -11,10 +11,34 @@ class BoardFileData:
 
 class BoardFileHandler:
     @staticmethod
+    def is_n_on_m(arr) -> tuple[bool, str]:
+        length = len(arr[0])
+        return all(len(l) == length for l in arr)
+
+    @staticmethod
+    def is_data_valid(groups) -> tuple[bool, str]:
+        if len(groups) < 3:
+            return 'File does not contain all of the needed data: cooldown, people, rumors'
+
+        try:
+            people = np.array(groups[1])
+            rumors = np.array(groups[2])
+        except:
+            return 'people or rumors are not a valid matrix'
+
+        if people.shape != rumors.shape:
+            return 'people and rumors should be of the same dimensions'
+
+        return ''
+
+    @staticmethod
     def read_data(path: str) -> BoardFileData:
         with open(path) as f:
-            groups = [[line for line in group.split() if line] for group in f.read().split("\n\n")]
-        return BoardFileData(groups[0][0], groups[1], groups[2])
+            groups = [[list(line) for line in group.split() if line] for group in f.read().split("\n\n")]
+        err = BoardFileHandler.is_data_valid(groups)
+        if err:
+            raise Exception(f'Trying to load an invalid board file: {path}, Error: {err}')
+        return BoardFileData(groups[0][0][0], groups[1], groups[2])
 
     @staticmethod
     def load(path: str) -> tuple[np.array, np.array, bool]:
@@ -22,7 +46,7 @@ class BoardFileHandler:
         cooldown = int(board_data.cooldown)
 
         people = np.array([[Person(int(doubt_level) - 1, cooldown) if int(doubt_level) > 0 else None for doubt_level in line] for line in board_data.people])
-        rumor_board = np.array([[int(let) for let in list(line)] for line in board_data.rumor_board], dtype=bool)
+        rumor_board = np.array([[int(let) for let in line] for line in board_data.rumor_board], dtype=bool)
         return rumor_board, people
     
     @staticmethod
