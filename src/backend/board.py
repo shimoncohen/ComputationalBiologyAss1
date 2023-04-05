@@ -41,7 +41,8 @@ class Board:
         rows, cols = self.__people.shape
         for r in range(rows):
             for c in range(cols):
-                self.__people[r, c].update_cooldown()
+                if self.__people[r, c]:
+                    self.__people[r, c].update_cooldown()
     
     def run_once(self) -> None:
         self.__update_cooldown()
