@@ -1,5 +1,4 @@
 import os
-import re
 import numpy as np
 from src.backend.person import Person
 
@@ -17,8 +16,11 @@ class BoardFileHandler:
 
     @staticmethod
     def is_data_valid(groups) -> tuple[bool, str]:
-        if len(groups) < 3:
+        if len(groups) < 3 or len(groups[0]) == 0 or len(groups[1]) == 0 or len(groups[2]) == 0:
             return 'File does not contain all of the needed data: cooldown, people, rumors'
+        
+        if not groups[0][0][0].isdigit():
+            return 'the value provided for cooldown should be a positive number'
 
         try:
             people = np.array(groups[1])
@@ -28,6 +30,18 @@ class BoardFileHandler:
 
         if people.shape != rumors.shape:
             return 'people and rumors should be of the same dimensions'
+        
+        rows, cols = rumors.shape
+        if not np.all(np.char.isnumeric(rumors)) or not np.all(np.char.isnumeric(people)):
+            return 'people and rumors should only contain numbers'
+        
+        flat = rumors.astype(int).flatten()
+        if not (flat < 2).all():
+            return 'rumor should be constructed only from 0 or 1'
+        
+        flat = people.astype(int).flatten()
+        if not (flat < 5).all():
+            return 'people should be constructed only from numbers 0 to 4'
 
         return ''
 
