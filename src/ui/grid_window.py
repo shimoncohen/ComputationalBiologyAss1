@@ -1,3 +1,5 @@
+from time import sleep
+
 import pygame as pg
 
 from .window import Window
@@ -23,6 +25,7 @@ class GridWindow(Window):
         self.block_w = int(self.w / self.n_blocks)
         self.change_window = False
         self.in_game_menu = InGameMenu(26, self.display_offset, w, YELLOW_COLOR)
+        self.should_run = True
 
     def draw_grid(self) -> None:
         self.screen.fill(WHITE_COLOR)
@@ -47,7 +50,10 @@ class GridWindow(Window):
 
     def render(self, event) -> None:
         super().render(event)
-        # self.board.run_once()
         self.draw_grid()
-        # self.in_game_menu.update()
         self.in_game_menu.draw(self.screen)
+        if self.should_run:
+            self.board.run_once()
+            self.in_game_menu.update()
+
+        pg.time.wait(1000)
