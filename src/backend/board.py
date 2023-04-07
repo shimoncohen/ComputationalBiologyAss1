@@ -6,10 +6,14 @@ class Board:
     def __init__(self, wrap_around: bool, L: int, neighbour_count_type: NeighbourCountType) -> None:
         self.L = L
         self.__game_logic = GameLogic(wrap_around, neighbour_count_type)
-        self.generation = 0
+        self.__generation = 0
 
         self.__rumor_board = None
         self.__people = None
+    
+    @property
+    def generation(self):
+        return self.__generation
     
     @property
     def rumor_board(self):
@@ -47,7 +51,7 @@ class Board:
     def run_once(self) -> None:
         self.__update_cooldown()
         self.__rumor_board = self.__game_logic.run_once(self.__people, self.__rumor_board)
-        self.generation += 1
+        self.__generation += 1
     
     def print(self):
         print(self.__rumor_board)
