@@ -31,7 +31,6 @@ class BoardFileHandler:
         if people.shape != rumors.shape:
             return 'people and rumors should be of the same dimensions'
         
-        rows, cols = rumors.shape
         if not np.all(np.char.isnumeric(rumors)) or not np.all(np.char.isnumeric(people)):
             return 'people and rumors should only contain numbers'
         

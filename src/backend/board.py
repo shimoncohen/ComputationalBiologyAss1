@@ -24,11 +24,9 @@ class Board:
         self.__rumor_board = np.full((rows, cols), False)
         self.__people = np.full((rows, cols), None)
         self.__game_logic.initialize_people(self.__people, p, self.L, doubt_probs)
-        self.__initialize_random_rumor(rows, cols)
+        self.__initialize_random_rumor()
     
-    def __initialize_random_rumor(self, rows, cols) -> None:
-        # Initialize one random person to spread rumor
-        # row, col = random.randrange(rows), random.randrange(cols)
+    def __initialize_random_rumor(self) -> None:
         idxs = np.argwhere(self.people)
         i = np.random.randint(idxs.shape[0])
         row, col = idxs[i]

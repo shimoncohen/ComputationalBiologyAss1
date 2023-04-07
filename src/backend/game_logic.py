@@ -18,9 +18,6 @@ class GameLogic:
                     people[r, c] = Person(doubt_level, L)
     
     def _generate_doubt_level(self, doubt_probs: list[int]) -> DoubtLevel:
-        # prob = random.uniform(0, 1)
-        # prob_thresholds = [sum(doubt_probs[:i + 1]) for i in range(len(doubt_probs))]
-        # doubt_level = next(x for x, p in enumerate(prob_thresholds) if p > prob)
         doubt_level = random.choices([d.value for d in DoubtLevel], weights=doubt_probs)[0]
         return DoubtLevel(doubt_level)
 
