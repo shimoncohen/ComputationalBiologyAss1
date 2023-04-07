@@ -1,10 +1,9 @@
-from time import sleep
-
 import pygame as pg
-
+from time import sleep
 from .window import Window
 from .colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR, YELLOW_COLOR
 from src.backend.board import Board
+from src.backend.game_logic import NeighbourCountType
 from .in_game_menu import InGameMenu
 
 
@@ -19,7 +18,7 @@ class GridWindow(Window):
         super().__init__(h, w, screen)
         self.n_blocks = int(num_blocks)
         self.display_offset = display_offset
-        self.board = Board(kwargs['L'], kwargs['wrap_around'])
+        self.board = Board(kwargs['L'], kwargs['wrap_around'], NeighbourCountType.ALL)
         self.board.initialize(self.n_blocks, self.n_blocks, kwargs['P'], kwargs['doubt_probs'])
         self.block_h = int((self.h - self.display_offset) / self.n_blocks)
         self.block_w = int(self.w / self.n_blocks)
