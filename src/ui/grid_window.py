@@ -26,6 +26,8 @@ class GridWindow(Window):
         self.change_window = False
         self.in_game_menu = InGameMenu(26, self.display_offset, w, YELLOW_COLOR)
         self.should_run = True
+        self.render_cooldown = 200
+        self.curr_tick = pg.time.get_ticks()
 
     def draw_grid(self) -> None:
         self.screen.fill(WHITE_COLOR)
@@ -46,14 +48,32 @@ class GridWindow(Window):
                 pg.draw.rect(self.screen, BLACK_COLOR, rect, 1)
 
     def _color_rumors(self) -> None:
-        pass
+        rows, cols = self.board.rumor_board.shape
 
-    def render(self, event) -> None:
-        super().render(event)
-        self.draw_grid()
-        self.in_game_menu.draw(self.screen)
-        if self.should_run:
-            self.board.run_once()
-            self.in_game_menu.update()
+        for r in range(rows):
+            for c in range(cols):
+                rumor = self.board.rumor_board[r, c]
+
+                rect = pg.Rect(c * self.block_w, self.display_offset + r * self.block_h, self.block_w, self.block_h)
+
+                if rumor:
+                    pg.draw.rect(self.screen, GREEN_COLOR, rect)
+
+                pg.draw.rect(self.screen, BLACK_COLOR, rect, 1)
+
+    def update(self, event):
+        super().update(event)
+
+    def render(self) -> None:
+        now_tick = pg.time.get_ticks()
+
+        if now_tick - self.curr_tick >= self.render_cooldown:
+            if self.should_run:
+                self.board.run_once()
+                self.in_game_menu.update()
+
+            self.draw_grid()
+            self.in_game_menu.draw(self.screen)
+            self.curr_tick = now_tick
 
         # pg.time.wait(1000)

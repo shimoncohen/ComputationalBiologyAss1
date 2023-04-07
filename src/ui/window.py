@@ -9,6 +9,6 @@ class Window:
 
         self.game_on = True
 
-    def render(self, event):
+    def update(self, event):
         if event.type == QUIT:
             self.game_on = False

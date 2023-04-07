@@ -21,9 +21,8 @@ class MenuWindow(Window):
         self.start_button = Button(200, 400, 150, 100, label='START')
         self.change_window = False
 
-    def render(self, event):
-        super().render(event)
-
+    def update(self, event):
+        super().update(event)
         for input_box in self.input_boxes:
             input_box.handle_event(event)
             input_box.update()
@@ -35,6 +34,10 @@ class MenuWindow(Window):
             for input_box in self.input_boxes:
                 input_box.set_value()
 
+        if self.start_button.active:
+            self.change_window = True
+
+    def render(self):
         self.screen.fill(WHITE_COLOR)
 
         for input_box in self.input_boxes:
@@ -42,9 +45,6 @@ class MenuWindow(Window):
 
         self.checkbox.draw(self.screen)
         self.start_button.draw(self.screen)
-
-        if self.start_button.active:
-            self.change_window = True
 
     def get_boxes_vals(self):
         d = {b.get_name(): b.get_value() for b in self.input_boxes}
