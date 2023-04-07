@@ -6,7 +6,7 @@ from src.backend.person import DoubtLevel, Person
 class GameLogic:
     def __init__(self, wrap_around: bool) -> None:
         self.__wrap_around: bool = wrap_around
-        self.__idx_func: function = wrap if self.__wrap_around else clip
+        self.__idx_func: callable = wrap if self.__wrap_around else clip
     
     def initialize_people(self, people: np.array, p: int, L:int, doubt_probs: list[int]):
         rows, cols = people.shape

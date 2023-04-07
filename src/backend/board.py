@@ -28,7 +28,10 @@ class Board:
     
     def __initialize_random_rumor(self, rows, cols) -> None:
         # Initialize one random person to spread rumor
-        row, col = random.randrange(rows), random.randrange(cols)
+        # row, col = random.randrange(rows), random.randrange(cols)
+        idxs = np.argwhere(self.people)
+        i = np.random.randint(idxs.shape[0])
+        row, col = idxs[i]
         self.__rumor_board[row, col] = True
     
     def load(self, path: str) -> None:
