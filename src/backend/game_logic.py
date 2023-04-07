@@ -1,5 +1,6 @@
 import random
 import numpy as np
+from typing import Callable
 from enum import IntEnum
 from src.backend.dimensions import clip, wrap
 from src.backend.person import DoubtLevel, Person
@@ -9,7 +10,7 @@ class NeighbourCountType(IntEnum):
     CROSS = 1
     DIAGONAL = 2
 
-    def get_strategy(neighbour_count_type: int) -> callable:
+    def get_strategy(neighbour_count_type: int) -> Callable[[int, int, int, int], bool]:
         match neighbour_count_type:
             case 1:
                 return lambda row, col, r, c: r != row and c != col
@@ -22,7 +23,7 @@ class GameLogic:
     def __init__(self, wrap_around: bool, neighbour_count_type: NeighbourCountType) -> None:
         self.__wrap_around: bool = wrap_around
         self.__idx_fix_func: callable = wrap if self.__wrap_around else clip
-        self.__neighbour_count_strategy: callable = NeighbourCountType.get_strategy(neighbour_count_type)
+        self.__neighbour_count_strategy: Callable[[int, int, int, int], bool] = NeighbourCountType.get_strategy(neighbour_count_type)
     
     def initialize_people(self, people: np.array, p: int, L:int, doubt_probs: list[int]):
         rows, cols = people.shape

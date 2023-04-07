@@ -18,6 +18,17 @@ There are four types of people:
 
 The percentage of each type in the population is a parameter decided by the user.
 
+### Neighbour selecting strategies
+
+Each person is affected by his neighbours. The definition of a person's neighbours is affected by two parameters:
+- wrap_aroud - A boolean value decided by the user. Defines the existance of 'borders' at the edge of the board.
+- neighbour selection strategy - The strategy is decided by the user and will be explained next.
+
+Neighbor selection strategy types:
+- ALL - All ehight adjacent cells
+- CROSS - Top, Bottom, Left and Right neighbours
+- DIAGONAL - Diagonal neighbours
+
 ## Running the program
 
 To run in CLI mode run:

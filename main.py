@@ -1,4 +1,4 @@
-from backend.game_logic import NeighbourCountType
+from src.backend.game_logic import NeighbourCountType
 from src.backend.board import Board
 
 if __name__ == "__main__":
