@@ -56,4 +56,4 @@ class GridWindow(Window):
             self.board.run_once()
             self.in_game_menu.update()
 
-        pg.time.wait(1000)
+        # pg.time.wait(1000)
