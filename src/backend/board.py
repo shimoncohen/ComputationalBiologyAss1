@@ -1,13 +1,17 @@
 import numpy as np
+from src.history.history_item import HistoryItemInterface, RumorHistoryItem
+from src.history.history import History
 from src.backend.game_logic import GameLogic, NeighbourCountType
 from src.loader.board_file_handler import BoardFileHandler
+from utils.person import people_to_doubt_level
 
 class Board:
     def __init__(self, wrap_around: bool, L: int, neighbour_count_type: NeighbourCountType) -> None:
         self.L = L
         self.__game_logic = GameLogic(wrap_around, neighbour_count_type)
-        self.__generation = 0
+        self.__history: History[RumorHistoryItem] = History[RumorHistoryItem]()
 
+        self.__generation = 0
         self.__rumor_board = None
         self.__people = None
     
@@ -28,6 +32,7 @@ class Board:
         self.__people = np.full((rows, cols), None)
         self.__game_logic.initialize_people(self.__people, p, self.L, doubt_probs)
         self.__initialize_random_rumor()
+        self.__save_to_history()
     
     def __initialize_random_rumor(self) -> None:
         idxs = np.argwhere(self.people)
@@ -37,6 +42,7 @@ class Board:
     
     def load(self, path: str) -> None:
         self.__rumor_board, self.__people = BoardFileHandler.load(path)
+        self.__save_to_history()
     
     def save(self, path: str) -> None:
         BoardFileHandler.save(path, self.L, self.__rumor_board, self.__people)
@@ -47,11 +53,30 @@ class Board:
             for c in range(cols):
                 if self.__people[r, c]:
                     self.__people[r, c].update_cooldown()
+
+    def __save_to_history(self) -> None:
+        people_by_doubt_level = people_to_doubt_level(self.__people)
+        people_counts = np.unique(people_by_doubt_level, return_counts=True)
+        people_counts = np.histogram(people_by_doubt_level, 5)[0][1:]
+        rumor_counts = np.unique(self.__rumor_board, return_counts=True)
+        # TODO: finish rumor count by doubt level
+        print(people_by_doubt_level)
+        print(self.__rumor_board[people_by_doubt_level > 0])
+        rumor_counts = np.histogram(self.__rumor_board[people_by_doubt_level != 0], 2)[0]
+        history_item = RumorHistoryItem(people_counts, rumor_counts)
+        self.__history.record(history_item)
     
     def run_once(self) -> None:
         self.__update_cooldown()
         self.__rumor_board = self.__game_logic.run_once(self.__people, self.__rumor_board)
+        self.__save_to_history()
         self.__generation += 1
     
     def print(self):
         print(self.__rumor_board)
+    
+    def print_history(self):
+        item: HistoryItemInterface
+        print(self.__history[0].get_csv_header_row())
+        for item in self.__history:
+            print(item.get_as_csv_row())

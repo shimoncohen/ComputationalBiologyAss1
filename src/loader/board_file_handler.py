@@ -1,6 +1,7 @@
 import os
 import numpy as np
 from src.backend.person import Person
+from utils.person import people_to_doubt_level
 
 class BoardFileData:
     def __init__(self, cooldown, people, rumor_board) -> None:
@@ -64,8 +65,7 @@ class BoardFileHandler:
     
     @staticmethod
     def save(path: str, cooldown: int, rumor_board: np.array, people: np.array) -> None:
-        rows, cols = people.shape
-        people_by_doubt_level = [[people[r, c].doubt_level + 1 if people[r, c] else 0 for c in range(cols)] for r in range(rows)]
+        people_by_doubt_level = people_to_doubt_level(people)
 
         list_to_str = lambda list: '\n'.join([''.join([str(int(item)) for item in row]) for row in list])
         people_string = list_to_str(people_by_doubt_level)

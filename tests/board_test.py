@@ -1,10 +1,11 @@
 import pytest
 import numpy as np
+from src.backend.game_logic import NeighbourCountType
 from src.backend.board import Board
 
 @pytest.fixture()
 def initialize_board(wrap_around, L, rows, cols, doubt_probs):
-    board = Board(wrap_around, L)
+    board = Board(wrap_around, L, NeighbourCountType.ALL)
     board.initialize(rows, cols, 1, doubt_probs)
     return board
 
