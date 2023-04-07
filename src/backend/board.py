@@ -1,12 +1,11 @@
-import random
 import numpy as np
-from src.backend.game_logic import GameLogic
+from src.backend.game_logic import GameLogic, NeighbourCountType
 from src.loader.board_file_handler import BoardFileHandler
 
 class Board:
-    def __init__(self, wrap_around: bool, L: int) -> None:
+    def __init__(self, wrap_around: bool, L: int, neighbour_count_type: NeighbourCountType) -> None:
         self.L = L
-        self.__game_logic = GameLogic(wrap_around)
+        self.__game_logic = GameLogic(wrap_around, neighbour_count_type)
         self.generation = 0
 
         self.__rumor_board = None
