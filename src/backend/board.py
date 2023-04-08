@@ -70,8 +70,5 @@ class Board:
     def print(self):
         print(self.__rumor_board)
     
-    def print_history(self):
-        item: HistoryItemInterface
-        print(self.__history[0].get_csv_header_row())
-        for item in self.__history:
-            print(item.get_as_csv_row())
+    def get_history_csv(self):
+        return self.__history.get_history_csv()
