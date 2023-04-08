@@ -3,7 +3,7 @@ from src.history.history_item import HistoryItemInterface, RumorHistoryItem
 from src.history.history import History
 from src.backend.game_logic import GameLogic, NeighbourCountType
 from src.loader.board_file_handler import BoardFileHandler
-from utils.person import people_to_doubt_level
+from utils.person import count_rumors_by_people, people_to_doubt_level
 
 class Board:
     def __init__(self, wrap_around: bool, L: int, neighbour_count_type: NeighbourCountType) -> None:
@@ -56,13 +56,8 @@ class Board:
 
     def __save_to_history(self) -> None:
         people_by_doubt_level = people_to_doubt_level(self.__people)
-        people_counts = np.unique(people_by_doubt_level, return_counts=True)
         people_counts = np.histogram(people_by_doubt_level, 5)[0][1:]
-        rumor_counts = np.unique(self.__rumor_board, return_counts=True)
-        # TODO: finish rumor count by doubt level
-        print(people_by_doubt_level)
-        print(self.__rumor_board[people_by_doubt_level > 0])
-        rumor_counts = np.histogram(self.__rumor_board[people_by_doubt_level != 0], 2)[0]
+        rumor_counts = count_rumors_by_people(self.rumor_board, people_by_doubt_level)
         history_item = RumorHistoryItem(people_counts, rumor_counts)
         self.__history.record(history_item)
     
