@@ -13,9 +13,9 @@ class NeighbourCountType(IntEnum):
     def get_strategy(neighbour_count_type: int) -> Callable[[int, int, int, int], bool]:
         match neighbour_count_type:
             case 1:
-                return lambda row, col, r, c: r != row and c != col
-            case 2:
                 return lambda row, col, r, c: r == row or c == col
+            case 2:
+                return lambda row, col, r, c: r != row and c != col
             case _:
                 return lambda row, col, r, c: r != row or c != col
 

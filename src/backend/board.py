@@ -71,7 +71,8 @@ class Board:
         self.__generation += 1
     
     def print(self):
-        print(self.__rumor_board)
+        rows, cols = self.__rumor_board.shape
+        [print(['x' if self.rumor_board[r, c] else '-' for c in range(cols)]) for r in range(rows)]
     
     def get_history_csv(self):
         return self.__history.get_history_csv()
