@@ -1,11 +1,9 @@
 import string
+from typing import List
 
 import pygame as pg
 
-from .colors import BLACK_COLOR
-
-COLOR_INACTIVE = pg.Color('lightskyblue3')
-COLOR_ACTIVE = pg.Color('dodgerblue2')
+from .colors import BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE
 
 
 class InputBox:
@@ -107,3 +105,68 @@ class CheckBox:
 
     def get_status(self):
         return {self.label.replace(':', '').replace(' ', '_').lower(): self.checked}
+
+
+class DropDown:
+    def __init__(self,
+                 x: int,
+                 y: int,
+                 w: int,
+                 h: int,
+                 font: pg.font.Font,
+                 color_menu: List[pg.color.Color],
+                 color_option: List[pg.color.Color],
+                 main_txt: str,
+                 options_txt: List[str]):
+        self.color_menu = color_menu
+        self.color_option = color_option
+        self.rect = pg.Rect(x, y, w, h)
+        self.font = font
+        self.initial_txt = main_txt
+        self.main = main_txt
+        self.options = options_txt
+        self.draw_menu = False
+        self.menu_active = False
+        self.active_option = -1
+        self.value = None
+
+    def draw(self, screen):
+        pg.draw.rect(screen, self.color_menu[self.menu_active], self.rect, 0)
+        msg = self.font.render(self.main, True, (0, 0, 0))
+        screen.blit(msg, msg.get_rect(center=self.rect.center))
+
+        if self.draw_menu:
+            for i, text in enumerate(self.options):
+                rect = self.rect.copy()
+                rect.y += (i + 1) * self.rect.height
+                pg.draw.rect(screen, self.color_option[1 if i == self.active_option else 0], rect, 0)
+                msg = self.font.render(text, True, (0, 0, 0))
+                screen.blit(msg, msg.get_rect(center=rect.center))
+
+    def update(self):
+        mpos = pg.mouse.get_pos()
+        self.menu_active = self.rect.collidepoint(mpos)
+
+        self.active_option = -1
+        for i in range(len(self.options)):
+            rect = self.rect.copy()
+            rect.y += (i + 1) * self.rect.height
+            if rect.collidepoint(mpos):
+                self.active_option = i
+                break
+
+        if not self.menu_active and self.active_option == -1:
+            self.draw_menu = False
+
+    def handle_event(self, event):
+        if event.type == pg.MOUSEBUTTONDOWN:
+            if self.menu_active:
+                self.main = self.initial_txt
+                self.draw_menu = not self.draw_menu
+            elif self.draw_menu and self.active_option >= 0:
+                self.draw_menu = False
+                self.main = self.options[self.active_option]\
+                    if self.active_option != -1 else self.initial_txt
+
+    def set_value(self):
+        pass
