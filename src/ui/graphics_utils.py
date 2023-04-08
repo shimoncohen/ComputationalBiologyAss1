@@ -122,13 +122,13 @@ class DropDown:
         self.color_option = color_option
         self.rect = pg.Rect(x, y, w, h)
         self.font = font
-        self.initial_txt = main_txt
-        self.main = main_txt
+        self.initial_txt = main_txt + options_txt[0]
+        self.main = main_txt + options_txt[0]
         self.options = options_txt
         self.draw_menu = False
         self.menu_active = False
-        self.active_option = -1
-        self.value = None
+        self.active_option = 0
+        self.value = self.options[0]
 
     def draw(self, screen):
         pg.draw.rect(screen, self.color_menu[self.menu_active], self.rect, 0)
@@ -139,7 +139,7 @@ class DropDown:
             for i, text in enumerate(self.options):
                 rect = self.rect.copy()
                 rect.y += (i + 1) * self.rect.height
-                pg.draw.rect(screen, self.color_option[1 if i == self.active_option else 0], rect, 0)
+                pg.draw.rect(screen, self.color_option[1 if i + 1 == self.active_option else 0], rect, 0)
                 msg = self.font.render(text, True, (0, 0, 0))
                 screen.blit(msg, msg.get_rect(center=rect.center))
 
@@ -147,26 +147,32 @@ class DropDown:
         mpos = pg.mouse.get_pos()
         self.menu_active = self.rect.collidepoint(mpos)
 
-        self.active_option = -1
-        for i in range(len(self.options)):
+        self.active_option = 0
+        for i in range(len(self.options) + 1):
             rect = self.rect.copy()
-            rect.y += (i + 1) * self.rect.height
+            rect.y += i * self.rect.height
             if rect.collidepoint(mpos):
                 self.active_option = i
                 break
 
-        if not self.menu_active and self.active_option == -1:
+        if not self.menu_active and self.active_option == 0:
             self.draw_menu = False
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
             if self.menu_active:
-                self.main = self.initial_txt
                 self.draw_menu = not self.draw_menu
-            elif self.draw_menu and self.active_option >= 0:
+            elif self.draw_menu and self.active_option > 0:
                 self.draw_menu = False
-                self.main = self.options[self.active_option]\
-                    if self.active_option != -1 else self.initial_txt
+                self.main = f"{self.main.split(':')[0]}:" \
+                            f" {self.options[self.active_option - 1] if self.active_option != 0 else self.initial_txt}"
+                self.value = self.active_option - 1
 
     def set_value(self):
-        pass
+        return
+
+    def get_value(self):
+        return self.value
+
+    def get_name(self):
+        return 'neighbour_count_type'

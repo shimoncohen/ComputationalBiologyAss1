@@ -17,14 +17,14 @@ class GridWindow(Window):
         super().__init__(h, w, screen)
         self.n_blocks = int(num_blocks)
         self.display_offset = display_offset
-        self.board = Board(kwargs['wrap_around'], kwargs['L'], NeighbourCountType.ALL)
+        self.board = Board(kwargs['wrap_around'], kwargs['L'], kwargs['neighbour_count_type'])
         self.board.initialize(self.n_blocks, self.n_blocks, kwargs['P'], kwargs['doubt_probs'])
         self.block_h = int((self.h - self.display_offset) / self.n_blocks)
         self.block_w = int(self.w / self.n_blocks)
         self.change_window = False
         self.in_game_menu = InGameMenu(26, self.display_offset, w, YELLOW_COLOR)
         self.should_run = True
-        self.render_cooldown = 200
+        self.render_cooldown = 1000
         self.curr_tick = pg.time.get_ticks()
 
     def draw_grid(self) -> None:

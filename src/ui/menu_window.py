@@ -15,11 +15,11 @@ class MenuWindow(Window):
         self.checkbox = CheckBox(220, 250, 40, 40, 32, BLACK_COLOR, label='Wrap Around: ')
         self.neighbors_dropdown = DropDown(
             50, 310, 200, 50,
-            pg.font.Font(None, 30),
+            pg.font.Font(None, 20),
             [COLOR_INACTIVE, COLOR_ACTIVE],
             [COLOR_LIST_INACTIVE, COLOR_LIST_ACTIVE],
-            "Neighbors Mode",
-            ["All neighbors", "Cross neighbors", "Diagonal Neighbors"])
+            "Neighbors Mode: ",
+            ["All", "Cross", "Diagonal"])
 
         self.input_boxes = [
             self.L_input_box,
