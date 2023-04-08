@@ -28,6 +28,9 @@ class Board:
         return self.__people
 
     def initialize(self, rows: int, cols: int, p: float, doubt_probs: list[int]) -> None:
+        if sum(doubt_probs) > 1:
+            raise Exception('doubt probabilities should sum up to 1')
+        
         self.__rumor_board = np.full((rows, cols), False)
         self.__people = np.full((rows, cols), None)
         self.__game_logic.initialize_people(self.__people, p, self.L, doubt_probs)
