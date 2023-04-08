@@ -9,6 +9,10 @@ class DoubtLevel(IntEnum):
     S1 = 3
 
     @staticmethod
+    def max():
+        return max(list(DoubtLevel))
+
+    @staticmethod
     def get_probability(doubt_level: int) -> float:
         size = len(DoubtLevel)
         intervals = np.linspace(0, 1, size)
@@ -34,8 +38,8 @@ class Person:
             return False
 
         doubt_level = self.__doubt_level
-        if num_neighbours >= 2 and doubt_level > 0:
-            doubt_level -= 1
+        if num_neighbours >= 2 and doubt_level < DoubtLevel.max():
+            doubt_level += 1
 
         threshold = DoubtLevel.get_probability(doubt_level)
         return threshold >= p
