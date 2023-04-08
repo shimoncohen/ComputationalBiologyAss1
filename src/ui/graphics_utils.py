@@ -104,7 +104,7 @@ class CheckBox:
                 self.checked = not self.checked
 
     def get_status(self):
-        return {self.label.replace(':', '').replace(' ', '_').lower(): self.checked}
+        return {self.label.replace(':', '').strip().replace(' ', '_').lower(): self.checked}
 
 
 class DropDown:

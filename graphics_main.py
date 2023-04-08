@@ -17,12 +17,11 @@ while curr_window.game_on:
         curr_window = GridWindow(h, w, screen,
                                  curr_window.grid_size_input_box.value,
                                  display_offset=40, doubt_probs=[0, 1 / 3, 2 / 3, 1],
-                                 wrap_around=False, **menu_boxes_val)
+                                 **menu_boxes_val)
 
     curr_window.render()
 
     for event in pygame.event.get():
         curr_window.update(event)
-        # curr_window.render(event)
 
     pygame.display.flip()
