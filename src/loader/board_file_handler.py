@@ -21,7 +21,7 @@ class BoardFileHandler:
             return 'File does not contain all of the needed data: cooldown, people, rumors'
         
         if not groups[0][0][0].isdigit():
-            return 'the value provided for cooldown should be a positive number'
+            return 'The value provided for cooldown should be a positive number'
 
         try:
             people = np.array(groups[1])
