@@ -1,5 +1,6 @@
 import math
 import numpy as np
+from src.backend.person import DoubtLevel
 from src.history.history_item import RumorHistoryItem
 from src.history.history import History
 from src.backend.game_logic import GameLogic, NeighbourCountType
@@ -59,7 +60,9 @@ class Board:
 
     def __save_to_history(self) -> None:
         people_by_doubt_level = people_to_doubt_level(self.__people)
-        people_counts = np.histogram(people_by_doubt_level, 5)[0][1:]
+        # Number of bins should include the bin edges and start from 1 (first doubt level)
+        num_bins = range(1, len(DoubtLevel) + 2)
+        people_counts = np.histogram(people_by_doubt_level, num_bins)[0]
         rumor_counts = count_rumors_by_people(self.rumor_board, people_by_doubt_level)
         history_item = RumorHistoryItem(people_counts, rumor_counts)
         self.__history.record(history_item)
