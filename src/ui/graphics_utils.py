@@ -226,14 +226,15 @@ class FileLoader:
             mpos = pg.mouse.get_pos()
 
             if self.rect.collidepoint(mpos):
-                self.txt = self.prompt_file().split('/')[-1]
+                self.value = self.prompt_file()
+                self.txt = self.value.split('/')[-1]
                 self.txt_surface = self.font.render(self.txt, True, BLACK_COLOR)
 
     def set_value(self):
-        self.value = self.txt
+        pass
 
     def get_name(self):
-        return self.label.replace(':', '').strip()
+        return 'config_file_path'
 
     def get_value(self):
         return self.value

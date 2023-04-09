@@ -17,7 +17,10 @@ class GridWindow(Window):
         self.n_blocks = int(num_blocks)
         self.display_offset = display_offset
         self.board = Board(kwargs['wrap_around'], kwargs['neighbour_count_type'])
-        self.board.initialize(self.n_blocks, self.n_blocks, kwargs['L'], kwargs['P'], kwargs['doubt_probs'])
+        if 'config_file_path' in kwargs:
+            self.board.load(kwargs['config_file_path'])
+        else:
+            self.board.initialize(self.n_blocks, self.n_blocks, kwargs['L'], kwargs['P'], kwargs['doubt_probs'])
         self.block_h = int((self.h - self.display_offset) / self.n_blocks)
         self.block_w = int(self.w / self.n_blocks)
         self.change_window = False
