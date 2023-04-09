@@ -3,6 +3,7 @@ from .window import Window
 from .colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR, YELLOW_COLOR
 from src.backend.board import Board
 from .in_game_menu import InGameMenu
+from src.backend.person import DoubtLevel
 
 
 class GridWindow(Window):
@@ -25,6 +26,7 @@ class GridWindow(Window):
         self.block_w = int(self.w / self.n_blocks)
         self.change_window = False
         self.in_game_menu = InGameMenu(26, self.display_offset, w, YELLOW_COLOR)
+        self.person_font = pg.font.Font(None, 14)
         self.should_run = True
         self.render_cooldown = 1000
         self.curr_tick = pg.time.get_ticks()
@@ -44,6 +46,10 @@ class GridWindow(Window):
                 rect = pg.Rect(c * self.block_w, self.display_offset + r * self.block_h, self.block_w, self.block_h)
                 if person:
                     pg.draw.rect(self.screen, RED_COLOR, rect)
+                    # text = self.person_font.render(DoubtLevel.map_to_str(person.doubt_level), True, BLACK_COLOR)
+                    # text_rect = text.get_rect()
+                    # text_rect.center = (rect.x + rect.w / 2, rect.y + rect.h / 2)
+                    # self.screen.blit(text, text_rect)
 
                 pg.draw.rect(self.screen, BLACK_COLOR, rect, 1)
 
