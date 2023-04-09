@@ -7,8 +7,7 @@ from src.loader.board_file_handler import BoardFileHandler
 from utils.person import count_rumors_by_people, people_to_doubt_level
 
 class Board:
-    def __init__(self, wrap_around: bool, L: int, neighbour_count_type: NeighbourCountType) -> None:
-        self.L = L
+    def __init__(self, wrap_around: bool, neighbour_count_type: NeighbourCountType) -> None:
         self.__game_logic = GameLogic(wrap_around, neighbour_count_type)
         self.__history: History[RumorHistoryItem] = History[RumorHistoryItem]()
 
@@ -28,13 +27,13 @@ class Board:
     def people(self):
         return self.__people
 
-    def initialize(self, rows: int, cols: int, p: float, doubt_probs: list[int]) -> None:
+    def initialize(self, rows: int, cols: int, L: int, p: float, doubt_probs: list[int]) -> None:
         if math.ceil(sum(doubt_probs)) > 1:
             raise Exception('doubt probabilities should sum up to 1')
         
         self.__rumor_board = np.full((rows, cols), False)
         self.__people = np.full((rows, cols), None)
-        self.__game_logic.initialize_people(self.__people, p, self.L, doubt_probs)
+        self.__game_logic.initialize_people(self.__people, p, L, doubt_probs)
         self.__initialize_random_rumor()
         self.__save_to_history()
     
