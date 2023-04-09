@@ -1,3 +1,4 @@
+import math
 import numpy as np
 from src.history.history_item import HistoryItemInterface, RumorHistoryItem
 from src.history.history import History
@@ -28,7 +29,7 @@ class Board:
         return self.__people
 
     def initialize(self, rows: int, cols: int, p: float, doubt_probs: list[int]) -> None:
-        if sum(doubt_probs) > 1:
+        if math.ceil(sum(doubt_probs)) > 1:
             raise Exception('doubt probabilities should sum up to 1')
         
         self.__rumor_board = np.full((rows, cols), False)
