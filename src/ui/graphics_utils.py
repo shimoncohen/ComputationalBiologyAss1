@@ -1,9 +1,12 @@
 import string
+import tkinter
+from tkinter import filedialog
 from typing import List
+import os
 
 import pygame as pg
 
-from .colors import BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE
+from src.ui.colors import BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE
 
 
 class InputBox:
@@ -176,3 +179,64 @@ class DropDown:
 
     def get_name(self):
         return 'neighbour_count_type'
+
+
+class FileLoader:
+    def __init__(self,
+                 x: int,
+                 y: int,
+                 h: int,
+                 w: int,
+                 font_size: int,
+                 color: pg.color.Color,
+                 label: str
+                 ):
+        self.x = x
+        self.y = y
+        self.h = h
+        self.w = w
+        self.font_size = font_size
+        self.font = pg.font.Font(None, font_size)
+        self.color = color
+        self.label = label
+        self.txt = '<Click to load config file>'
+        self.rect = pg.Rect(x, y, h, w)
+        self.txt_surface = self.font.render(self.txt, True, BLACK_COLOR)
+        self.label_surface = self.font.render(self.label, True, BLACK_COLOR)
+        self.value = ''
+
+    def prompt_file(self) -> str:
+        """Create a Tk file dialog and cleanup when finished"""
+        top = tkinter.Tk()
+        top.withdraw()  # hide window
+        file_name = filedialog.askopenfilename(parent=top)
+        top.destroy()
+        return file_name
+
+    def draw(self, screen):
+        # Blit the rect.
+        pg.draw.rect(screen, self.color, self.rect)
+        pg.draw.rect(screen, BLACK_COLOR, self.rect, 1)
+        # Blit the text.
+        screen.blit(self.label_surface, (self.rect.x - 110, self.rect.y + 10))
+        screen.blit(self.txt_surface, (self.rect.x + 10, self.rect.y + 10))
+
+    def update(self):
+        pass
+
+    def handle_event(self, event):
+        if event.type == pg.MOUSEBUTTONDOWN:
+            mpos = pg.mouse.get_pos()
+
+            if self.rect.collidepoint(mpos):
+                self.txt = self.prompt_file().split('/')[-1]
+                self.txt_surface = self.font.render(self.txt, True, BLACK_COLOR)
+
+    def set_value(self):
+        self.value = self.txt
+
+    def get_name(self):
+        return self.label.replace(':', '').strip()
+
+    def get_value(self):
+        return self.value

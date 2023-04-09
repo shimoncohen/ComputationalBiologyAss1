@@ -1,5 +1,5 @@
 from .window import Window
-from .graphics_utils import InputBox, CheckBox, DropDown
+from .graphics_utils import InputBox, CheckBox, DropDown, FileLoader
 from .shapes import Button
 from .colors import WHITE_COLOR, BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE, COLOR_LIST_ACTIVE, COLOR_LIST_INACTIVE
 
@@ -20,11 +20,18 @@ class MenuWindow(Window):
             [COLOR_LIST_INACTIVE, COLOR_LIST_ACTIVE],
             "Neighbors Mode: ",
             ["All", "Cross", "Diagonal"])
+        self.fileloader = FileLoader(
+            160, 290, 180, 30,
+            font_size=20,
+            color=WHITE_COLOR,
+            label="Click to load file: "
+        )
 
         self.input_boxes = [
             self.L_input_box,
             self.p_input_box,
-            self.grid_size_input_box
+            self.grid_size_input_box,
+            self.fileloader
         ]
 
         self.start_button = Button(200, 400, 150, 100, label='START')
@@ -64,4 +71,5 @@ class MenuWindow(Window):
         d = {b.get_name(): b.get_value() for b in self.input_boxes}
         d.update(self.checkbox.get_status())
         d.update({self.neighbors_dropdown.get_name(): self.neighbors_dropdown.get_value()})
+        print(d)
         return d
