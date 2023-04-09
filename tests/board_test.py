@@ -5,8 +5,8 @@ from src.backend.board import Board
 
 @pytest.fixture()
 def initialize_board(wrap_around, L, rows, cols, doubt_probs):
-    board = Board(wrap_around, L, NeighbourCountType.ALL)
-    board.initialize(rows, cols, 1, doubt_probs)
+    board = Board(wrap_around, NeighbourCountType.ALL)
+    board.initialize(rows, cols, L, 1, doubt_probs)
     return board
 
 class Helpers:
@@ -24,15 +24,17 @@ class TestBoard:
     )
     def test_board_initializes_correctly(self, initialize_board, L):
         board = initialize_board
+        rows, cols = board.people.shape
 
         # Make sure all people are defined
-        assert all([p is not None for p in board.people])
+        assert all([[board.people[r, c] is not None for c in range(cols)] for r in range(rows)])
+
+        # Make sure all people have the correct cooldown value
+        assert all([[board.people[r, c].cooldown == L for c in range(cols)] for r in range(rows)])
 
         # Make sure only one person is about to pass the rumor
         count = board.rumor_board.sum()
         assert count == 1
-
-        assert board.L == L
     
     @pytest.mark.parametrize(
         "wrap_around, L, rows, cols, doubt_probs",
@@ -41,7 +43,7 @@ class TestBoard:
             pytest.param(False, 2, 4, 7, [0.25, 0.25, 0.25, 0.25])
         ]
     )
-    def test_update_cooldown(self, initialize_board, L):
+    def test_update_cooldown(self, initialize_board):
         board: Board = initialize_board
         
         # Run a few generations

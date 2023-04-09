@@ -33,7 +33,7 @@ class TestPerson:
                 DoubtLevel.S1, 10, 1, True
             ),
             pytest.param(
-                DoubtLevel.S3, 5, 2, False
+                DoubtLevel.S2, 5, 2, True
             ),
             pytest.param(
                 DoubtLevel.S4, 7, 1, False
@@ -56,10 +56,13 @@ class TestPerson:
                 DoubtLevel.S1, 1, True
             ),
             pytest.param(
-                DoubtLevel.S3, 5, False
+                DoubtLevel.S1, 8, True
             ),
             pytest.param(
-                DoubtLevel.S4, 8, False
+                DoubtLevel.S2, 5, True
+            ),
+            pytest.param(
+                DoubtLevel.S4, 1, False
             ),
         ],
     )
