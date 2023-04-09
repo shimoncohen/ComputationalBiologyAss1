@@ -234,7 +234,7 @@ class FileLoader:
         pass
 
     def get_name(self):
-        return 'config_file_path'
+        return 'config_file_path' if self.value != '' else 'None'
 
     def get_value(self):
-        return self.value
+        return self.value if self.value != '' else None

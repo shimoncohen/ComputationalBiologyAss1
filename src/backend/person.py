@@ -18,6 +18,17 @@ class DoubtLevel(IntEnum):
         intervals = np.linspace(0, 1, size)
         return intervals[doubt_level]
 
+    @staticmethod
+    def map_to_str(doubt_level: int) -> str:
+        m = {
+            DoubtLevel.S1: 'S1',
+            DoubtLevel.S2: 'S2',
+            DoubtLevel.S3: 'S3',
+            DoubtLevel.S4: 'S4'
+        }
+
+        return m.get(doubt_level, '')
+
 class Person:
     def __init__(self, doubt_level: DoubtLevel, cooldown_time: int) -> None:
         self.__doubt_level = doubt_level
