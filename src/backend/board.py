@@ -1,6 +1,6 @@
 import math
 import numpy as np
-from src.history.history_item import HistoryItemInterface, RumorHistoryItem
+from src.history.history_item import RumorHistoryItem
 from src.history.history import History
 from src.backend.game_logic import GameLogic, NeighbourCountType
 from src.loader.board_file_handler import BoardFileHandler

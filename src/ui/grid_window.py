@@ -2,7 +2,6 @@ import pygame as pg
 from .window import Window
 from .colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR, YELLOW_COLOR
 from src.backend.board import Board
-from src.backend.game_logic import NeighbourCountType
 from .in_game_menu import InGameMenu
 
 

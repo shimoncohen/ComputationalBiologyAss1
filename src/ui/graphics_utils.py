@@ -1,11 +1,8 @@
 import string
 import tkinter
+import pygame as pg
 from tkinter import filedialog
 from typing import List
-import os
-
-import pygame as pg
-
 from src.ui.colors import BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE
 
 
