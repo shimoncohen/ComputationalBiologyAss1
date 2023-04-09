@@ -16,7 +16,7 @@ while curr_window.game_on:
         menu_boxes_val = curr_window.get_boxes_vals()
         curr_window = GridWindow(h, w, screen,
                                  curr_window.grid_size_input_box.value,
-                                 display_offset=40, doubt_probs=[0, 0, 0, 1],
+                                 display_offset=40,
                                  **menu_boxes_val)
 
     curr_window.render()

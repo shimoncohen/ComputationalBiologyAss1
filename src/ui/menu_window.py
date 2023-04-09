@@ -12,10 +12,10 @@ class MenuWindow(Window):
         self.L_input_box = InputBox(170, 30, 100, 40, label="L:", text='5')
         self.p_input_box = InputBox(170, 80, 100, 40, label='P:', text='0.5')
         self.grid_size_input_box = InputBox(170, 130, 100, 40, label='Grid Size:', text='100')
-        self.s1_perc_input_box = InputBox(400, 30, 100, 40, label='S1:', label_x_offset=50, text='')
-        self.s2_perc_input_box = InputBox(400, 80, 100, 40, label='S2:', label_x_offset=50, text='')
-        self.s3_perc_input_box = InputBox(400, 130, 100, 40, label='S3:', label_x_offset=50, text='')
-        self.s4_perc_input_box = InputBox(400, 180, 100, 40, label='S4:', label_x_offset=50, text='')
+        self.s1_perc_input_box = InputBox(400, 30, 100, 40, label='S1:', label_x_offset=50, text='0.25')
+        self.s2_perc_input_box = InputBox(400, 80, 100, 40, label='S2:', label_x_offset=50, text='0.25')
+        self.s3_perc_input_box = InputBox(400, 130, 100, 40, label='S3:', label_x_offset=50, text='0.25')
+        self.s4_perc_input_box = InputBox(400, 180, 100, 40, label='S4:', label_x_offset=50, text='0.25')
         self.checkbox = CheckBox(220, 180, 40, 40, 32, BLACK_COLOR, label='Wrap Around: ')
         self.neighbors_dropdown = DropDown(
             50, 240, 200, 30,
@@ -67,6 +67,9 @@ class MenuWindow(Window):
         if self.start_button.active:
             for input_box in self.input_boxes:
                 input_box.set_value()
+
+            for input_box in self.perc_input_boxes:
+                input_box.set_value()
             self.neighbors_dropdown.set_value()
 
         if self.start_button.active:
@@ -88,6 +91,7 @@ class MenuWindow(Window):
     def get_boxes_vals(self):
         d = {b.get_name(): b.get_value() for b in self.input_boxes}
         d.update(self.checkbox.get_status())
+        d.update({'doubt_probs': [b.get_value() for b in self.perc_input_boxes]})
         d.update({self.neighbors_dropdown.get_name(): self.neighbors_dropdown.get_value()})
         print(d)
         return d
