@@ -1,3 +1,4 @@
 numpy
-pytest=7.2.2
 pygame
+pytest=7.2.2
+pyfakefs=5.2.0

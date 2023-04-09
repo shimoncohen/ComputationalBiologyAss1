@@ -79,3 +79,6 @@ class Board:
     
     def get_history_csv(self):
         return self.__history.get_history_csv()
+    
+    def save_history(self, path: str) -> None:
+        self.__history.save(path)

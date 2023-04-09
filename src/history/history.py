@@ -12,6 +12,13 @@ class History(Generic[T]):
     
     def get_history_csv(self) -> List[str]:
         return [ self.__stack[0].get_csv_header_row(), *[item.get_as_csv_row() for item in self.__stack]]
+    
+    def save(self, path: str) -> None:
+        with open(path, '+w') as f:
+            csv_lines = self.get_history_csv()
+            for line in csv_lines:
+                f.write(line)
+                f.write('\n')
 
     def __getitem__(self, item):
         return self.__stack[item]
