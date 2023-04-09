@@ -9,9 +9,13 @@ import pygame as pg
 class MenuWindow(Window):
     def __init__(self, h, w, screen):
         super().__init__(h, w, screen)
-        self.L_input_box = InputBox(170, 30, 50, 40, label="L:", text='5')
-        self.p_input_box = InputBox(170, 80, 50, 40, label='P:', text='0.5')
-        self.grid_size_input_box = InputBox(170, 130, 50, 40, label='Grid Size:', text='100')
+        self.L_input_box = InputBox(170, 30, 100, 40, label="L:", text='5')
+        self.p_input_box = InputBox(170, 80, 100, 40, label='P:', text='0.5')
+        self.grid_size_input_box = InputBox(170, 130, 100, 40, label='Grid Size:', text='100')
+        self.s1_perc_input_box = InputBox(400, 30, 100, 40, label='S1:', label_x_offset=50, text='')
+        self.s2_perc_input_box = InputBox(400, 80, 100, 40, label='S2:', label_x_offset=50, text='')
+        self.s3_perc_input_box = InputBox(400, 130, 100, 40, label='S3:', label_x_offset=50, text='')
+        self.s4_perc_input_box = InputBox(400, 180, 100, 40, label='S4:', label_x_offset=50, text='')
         self.checkbox = CheckBox(220, 180, 40, 40, 32, BLACK_COLOR, label='Wrap Around: ')
         self.neighbors_dropdown = DropDown(
             50, 240, 200, 30,
@@ -34,12 +38,23 @@ class MenuWindow(Window):
             self.fileloader
         ]
 
+        self.perc_input_boxes = [
+            self.s4_perc_input_box,
+            self.s3_perc_input_box,
+            self.s2_perc_input_box,
+            self.s1_perc_input_box
+        ]
+
         self.start_button = Button(200, 400, 150, 100, label='START')
         self.change_window = False
 
     def update(self, event):
         super().update(event)
         for input_box in self.input_boxes:
+            input_box.handle_event(event)
+            input_box.update()
+
+        for input_box in self.perc_input_boxes:
             input_box.handle_event(event)
             input_box.update()
 
@@ -62,6 +77,9 @@ class MenuWindow(Window):
         self.start_button.draw(self.screen)
 
         for input_box in self.input_boxes:
+            input_box.draw(self.screen)
+
+        for input_box in self.perc_input_boxes:
             input_box.draw(self.screen)
 
         self.neighbors_dropdown.draw(self.screen)
