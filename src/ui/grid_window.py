@@ -12,6 +12,7 @@ class GridWindow(Window):
                  screen: pg.display,
                  num_blocks: int,
                  display_offset: int,
+                 render_cooldown: float,
                  **kwargs
                  ):
         super().__init__(h, w, screen)
@@ -28,7 +29,7 @@ class GridWindow(Window):
         self.in_game_menu = InGameMenu(26, self.display_offset, w, YELLOW_COLOR)
         self.person_font = pg.font.Font(None, 14)
         self.should_run = True
-        self.render_cooldown = 1000
+        self.render_cooldown = int(render_cooldown * 1000)
         self.curr_tick = pg.time.get_ticks()
 
     def draw_grid(self) -> None:

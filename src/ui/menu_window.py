@@ -16,6 +16,11 @@ class MenuWindow(Window):
         self.s2_perc_input_box = InputBox(400, 80, 100, 40, label='S2:', label_x_offset=50, text='0.25')
         self.s3_perc_input_box = InputBox(400, 130, 100, 40, label='S3:', label_x_offset=50, text='0.25')
         self.s4_perc_input_box = InputBox(400, 180, 100, 40, label='S4:', label_x_offset=50, text='0.25')
+        self.render_time_input_box = InputBox(420, 230, 80, 40,
+                                              label_font_size=32, label='Time : ',
+                                              label_x_offset=70,
+                                              text='0.5',
+                                              text_font_size=32)
         self.checkbox = CheckBox(220, 180, 40, 40, 32, BLACK_COLOR, label='Wrap Around: ')
         self.neighbors_dropdown = DropDown(
             50, 240, 200, 30,
@@ -58,11 +63,13 @@ class MenuWindow(Window):
             input_box.handle_event(event)
             input_box.update()
 
+        self.render_time_input_box.update()
         self.neighbors_dropdown.update()
 
         self.checkbox.handle_event(event)
         self.start_button.handle_event(event)
         self.neighbors_dropdown.handle_event(event)
+        self.render_time_input_box.handle_event(event)
 
         if self.start_button.active:
             for input_box in self.input_boxes:
@@ -70,9 +77,10 @@ class MenuWindow(Window):
 
             for input_box in self.perc_input_boxes:
                 input_box.set_value()
-            self.neighbors_dropdown.set_value()
 
-        if self.start_button.active:
+            self.neighbors_dropdown.set_value()
+            self.render_time_input_box.set_value()
+
             self.change_window = True
 
     def render(self):
@@ -85,6 +93,7 @@ class MenuWindow(Window):
         for input_box in self.perc_input_boxes:
             input_box.draw(self.screen)
 
+        self.render_time_input_box.draw(self.screen)
         self.neighbors_dropdown.draw(self.screen)
         self.checkbox.draw(self.screen)
 

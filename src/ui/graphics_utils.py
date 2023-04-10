@@ -8,17 +8,17 @@ from src.ui.colors import BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE
 
 class InputBox:
     def __init__(self, x, y, w, h,
-                 font_size=32, label='',
+                 label_font_size=32, label='',
                  label_x_offset=120, label_y_offset=10,
-                 text=''):
+                 text_font_size=32, text=''):
         self.rect = pg.Rect(x, y, w, h)
         self.color = COLOR_INACTIVE
         self.text = text
         self.label = label
-        self.font_size = font_size
-        self.font = pg.font.Font(None, self.font_size)
-        self.txt_surface = self.font.render(self.text, True, BLACK_COLOR)
-        self.label_surface = self.font.render(self.label, True, BLACK_COLOR)
+        self.label_font = pg.font.Font(None, label_font_size)
+        self.txt_font = pg.font.Font(None, text_font_size)
+        self.txt_surface = self.txt_font.render(self.text, True, BLACK_COLOR)
+        self.label_surface = self.label_font.render(self.label, True, BLACK_COLOR)
         self.label_x_offset = label_x_offset
         self.label_y_offset = label_y_offset
         self.active = False
@@ -41,13 +41,14 @@ class InputBox:
                 elif event.key == pg.K_BACKSPACE:
                     self.text = self.text[:-1]
                 # Re-render the text.
-                self.txt_surface = self.font.render(self.text, True, BLACK_COLOR)
+                self.txt_surface = self.txt_font.render(self.text, True, BLACK_COLOR)
 
     def update(self) -> None:
         # Resize the box if the text is too long.
         # width = max(self.rect.w, self.txt_surface.get_width()+10)
         # self.rect.w = width
         pass
+
     def draw(self, screen) -> None:
         # Blit the text.
         screen.blit(self.label_surface, (self.rect.x-self.label_x_offset, self.rect.y+self.label_y_offset))
