@@ -1,14 +1,9 @@
 import pytest
 import numpy as np
 from typing import Tuple
-from pyfakefs.fake_filesystem_unittest import Patcher
 from src.backend.game_logic import NeighbourCountType
 from src.backend.board import Board
 
-@pytest.fixture
-def fs_no_root():
-    with Patcher(allow_root_user=False) as patcher:
-        yield patcher.fs
 
 @pytest.fixture()
 def initialize_board(wrap_around, L, rows, cols, doubt_probs):

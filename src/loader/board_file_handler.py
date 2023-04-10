@@ -11,11 +11,6 @@ class BoardFileData:
 
 class BoardFileHandler:
     @staticmethod
-    def is_n_on_m(arr) -> tuple[bool, str]:
-        length = len(arr[0])
-        return all(len(l) == length for l in arr)
-
-    @staticmethod
     def is_data_valid(groups) -> tuple[bool, str]:
         if len(groups) < 3 or len(groups[0]) == 0 or len(groups[1]) == 0 or len(groups[2]) == 0:
             return 'File does not contain all of the needed data: cooldown, people, rumors'
@@ -52,7 +47,7 @@ class BoardFileHandler:
         err = BoardFileHandler.is_data_valid(groups)
         if err:
             raise Exception(f'Trying to load an invalid board file: {path}, Error: {err}')
-        return BoardFileData(groups[0][0][0], groups[1], groups[2])
+        return BoardFileData(''.join(groups[0][0]), groups[1], groups[2])
 
     @staticmethod
     def load(path: str) -> tuple[np.array, np.array, bool]:
