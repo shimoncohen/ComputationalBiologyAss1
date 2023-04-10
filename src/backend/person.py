@@ -3,10 +3,10 @@ import random
 import numpy as np
 
 class DoubtLevel(IntEnum):
-    S4 = 0,
-    S3 = 1,
-    S2 = 2,
-    S1 = 3
+    S1 = 0,
+    S2 = 1,
+    S3 = 2,
+    S4 = 3
 
     @staticmethod
     def max():
@@ -45,15 +45,15 @@ class Person:
 
     def should_pass_rumor(self, num_neighbours: int) -> bool:
         p = random.uniform(0, 1)
-        if num_neighbours == 0 or self.__cooldown > 0 or p == 0:
+        if num_neighbours == 0 or self.__cooldown > 0 or p == 1:
             return False
 
         doubt_level = self.__doubt_level
-        if num_neighbours >= 2 and doubt_level < DoubtLevel.max():
-            doubt_level += 1
+        if num_neighbours >= 2 and doubt_level > 0:
+            doubt_level -= 1
 
         threshold = DoubtLevel.get_probability(doubt_level)
-        return threshold >= p
+        return threshold <= p
 
     def activate_cooldown(self):
         self.__cooldown = self.__cooldown_time
