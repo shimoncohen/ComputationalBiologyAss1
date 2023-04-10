@@ -21,7 +21,7 @@ class InGameMenu:
         self.color = color
         self.back_to_menu_button = Button(
             self.w / 2, self.h / 4, self.w / 4, 2 * self.h / 3,
-            font_size=30, label="Main Menu", label_x_offset=-20
+            font_size=30, label="Main Menu", label_x_offset=-20, label_y_offset=10,
         )
         self.stop_game = False
 
