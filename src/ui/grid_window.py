@@ -36,6 +36,20 @@ class GridWindow(Window):
         self.screen.fill(WHITE_COLOR)
         self._color_people()
         self._color_rumors()
+        # self._render_doubt_level()
+
+    def _render_doubt_level(self) -> None:
+        rows, cols = self.board.people.shape
+
+        for r in range(rows):
+            for c in range(cols):
+                person = self.board.people[r, c]
+                if person:
+                    rect = pg.Rect(c * self.block_w, self.display_offset + r * self.block_h, self.block_w, self.block_h)
+                    text = self.person_font.render(DoubtLevel.map_to_str(person.doubt_level), True, BLACK_COLOR)
+                    text_rect = text.get_rect()
+                    text_rect.center = (rect.x + rect.w / 2, rect.y + rect.h / 2)
+                    self.screen.blit(text, text_rect)
 
     def _color_people(self) -> None:
         rows, cols = self.board.people.shape
@@ -47,10 +61,6 @@ class GridWindow(Window):
                 rect = pg.Rect(c * self.block_w, self.display_offset + r * self.block_h, self.block_w, self.block_h)
                 if person:
                     pg.draw.rect(self.screen, RED_COLOR, rect)
-                    # text = self.person_font.render(DoubtLevel.map_to_str(person.doubt_level), True, BLACK_COLOR)
-                    # text_rect = text.get_rect()
-                    # text_rect.center = (rect.x + rect.w / 2, rect.y + rect.h / 2)
-                    # self.screen.blit(text, text_rect)
 
                 pg.draw.rect(self.screen, BLACK_COLOR, rect, 1)
 
