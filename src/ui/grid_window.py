@@ -1,3 +1,5 @@
+from typing import List
+
 import pygame as pg
 from .window import Window
 from .colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR, YELLOW_COLOR
@@ -86,6 +88,9 @@ class GridWindow(Window):
         if self.in_game_menu.stop_game:
             self.change_window = True
 
+        cols = self.get_collisions(event)
+        self.change_cursor(cols)
+
     def render(self) -> None:
         now_tick = pg.time.get_ticks()
 
@@ -97,3 +102,9 @@ class GridWindow(Window):
             self.draw_grid()
             self.in_game_menu.draw(self.screen)
             self.curr_tick = now_tick
+
+    def get_collisions(self, event) -> List[bool]:
+        cols = []
+        cols.append(self.in_game_menu.back_to_menu_button.get_collision(event))
+
+        return cols
