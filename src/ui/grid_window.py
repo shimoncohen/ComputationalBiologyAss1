@@ -36,7 +36,8 @@ class GridWindow(Window):
         self.screen.fill(WHITE_COLOR)
         self._color_people()
         self._color_rumors()
-        # self._render_doubt_level()
+        if self.n_blocks <= 40:
+            self._render_doubt_level()
 
     def _render_doubt_level(self) -> None:
         rows, cols = self.board.people.shape
