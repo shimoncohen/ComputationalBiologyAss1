@@ -1,9 +1,10 @@
-from .window import Window
-from .graphics_utils import InputBox, CheckBox, DropDown, FileLoader
-from .shapes import Button
-from .colors import WHITE_COLOR, BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE, COLOR_LIST_ACTIVE, COLOR_LIST_INACTIVE
+from typing import List
 
 import pygame as pg
+
+from .window import Window
+from .graphics_utils import InputBox, CheckBox, DropDown, FileLoader, Button
+from .colors import WHITE_COLOR, BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE, COLOR_LIST_ACTIVE, COLOR_LIST_INACTIVE
 
 
 class MenuWindow(Window):
@@ -83,6 +84,9 @@ class MenuWindow(Window):
 
             self.change_window = True
 
+        cols = self.get_collisions(event)
+        self.change_cursor(cols)
+
     def render(self):
         self.screen.fill(WHITE_COLOR)
         self.start_button.draw(self.screen)
@@ -104,3 +108,17 @@ class MenuWindow(Window):
         d.update({self.neighbors_dropdown.get_name(): self.neighbors_dropdown.get_value()})
         print(d)
         return d
+
+    def get_collisions(self, event) -> List[bool]:
+        cols = []
+        for box in self.input_boxes:
+            cols.append(box.get_collision(event))
+        for box in self.perc_input_boxes:
+            cols.append(box.get_collision(event))
+
+        cols.append(self.neighbors_dropdown.get_collision(event))
+        cols.append(self.checkbox.get_collision(event))
+        cols.append(self.render_time_input_box.get_collision(event))
+        cols.append(self.start_button.get_collision(event))
+
+        return cols

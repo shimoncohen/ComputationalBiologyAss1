@@ -1,6 +1,6 @@
 import pygame as pg
 
-from .shapes import Button
+from .graphics_utils import Button
 from .colors import BLACK_COLOR
 
 

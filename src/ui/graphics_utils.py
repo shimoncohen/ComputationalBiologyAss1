@@ -3,15 +3,16 @@ import tkinter
 import pygame as pg
 from tkinter import filedialog
 from typing import List
-from src.ui.colors import BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE
+from src.ui.colors import BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE, RED_COLOR, WHITE_COLOR
+from .shapes import Collidable
 
 
-class InputBox:
+class InputBox(Collidable):
     def __init__(self, x, y, w, h,
                  label_font_size=32, label='',
                  label_x_offset=120, label_y_offset=10,
                  text_font_size=32, text=''):
-        self.rect = pg.Rect(x, y, w, h)
+        super(InputBox, self).__init__(pg.Rect(x, y, w, h))
         self.color = COLOR_INACTIVE
         self.text = text
         self.label = label
@@ -69,7 +70,7 @@ class InputBox:
         return self.label.replace(':', '')
 
 
-class CheckBox:
+class CheckBox(Collidable):
     def __init__(self,
                  x: int,
                  y: int,
@@ -79,13 +80,13 @@ class CheckBox:
                  color: pg.color.Color,
                  label: str = ''
                  ):
+        super(CheckBox, self).__init__(pg.Rect(x, y, w, h))
         self.checked = False
         self.x = x
         self.y = y
         self.h = h
         self.w = w
         self.label = label
-        self.rect = pg.Rect(x, y, w, h)
         self.inner_rect = pg.Rect(x + 5, y + 5, w - 10, h - 10)
         self.color = color
         self.label = label
@@ -113,7 +114,7 @@ class CheckBox:
         return {self.label.replace(':', '').strip().replace(' ', '_').lower(): self.checked}
 
 
-class DropDown:
+class DropDown(Collidable):
     def __init__(self,
                  x: int,
                  y: int,
@@ -124,9 +125,9 @@ class DropDown:
                  color_option: List[pg.color.Color],
                  main_txt: str,
                  options_txt: List[str]):
+        super(DropDown, self).__init__(pg.Rect(x, y, w, h))
         self.color_menu = color_menu
         self.color_option = color_option
-        self.rect = pg.Rect(x, y, w, h)
         self.font = font
         self.initial_txt = main_txt + options_txt[0]
         self.main = main_txt + options_txt[0]
@@ -184,7 +185,7 @@ class DropDown:
         return 'neighbour_count_type'
 
 
-class FileLoader:
+class FileLoader(Collidable):
     def __init__(self,
                  x: int,
                  y: int,
@@ -194,6 +195,7 @@ class FileLoader:
                  color: pg.color.Color,
                  label: str
                  ):
+        super(FileLoader, self).__init__(pg.Rect(x, y, h, w))
         self.x = x
         self.y = y
         self.h = h
@@ -203,7 +205,6 @@ class FileLoader:
         self.color = color
         self.label = label
         self.txt = '<Click to load config file>'
-        self.rect = pg.Rect(x, y, h, w)
         self.txt_surface = self.font.render(self.txt, True, BLACK_COLOR)
         self.label_surface = self.font.render(self.label, True, BLACK_COLOR)
         self.value = ''
@@ -244,3 +245,34 @@ class FileLoader:
 
     def get_value(self):
         return self.value if self.value != '' else None
+
+
+class Button(Collidable):
+    def __init__(self, x, y, w, h, font_size=32, label='', label_x_offset=0, label_y_offset=0):
+        super(Button, self).__init__(pg.Rect(x, y, w, h))
+        self.color = RED_COLOR
+        self.label = label
+        self.label_x_offset = label_x_offset
+        self.label_y_offset = label_y_offset
+        self.font_size = font_size
+        self.font = pg.font.Font(None, self.font_size)
+        self.label_surface = self.font.render(self.label, True, WHITE_COLOR)
+        self.active = False
+
+    def draw(self, screen):
+        # Blit the rect.
+        pg.draw.rect(screen, self.color, self.rect, border_radius=5)
+        # Blit the text.
+        screen.blit(self.label_surface,
+                    (self.rect.x+self.rect.w/2 - self.font_size + self.label_x_offset,
+                     self.rect.y+self.rect.h/2 - self.font_size/2 + self.label_y_offset)
+                    )
+
+    def handle_event(self, event):
+        if event.type == pg.MOUSEBUTTONDOWN:
+            # If the user clicked on the input_box rect.
+            if self.rect.collidepoint(event.pos):
+                # Toggle the active variable.
+                self.active = not self.active
+            else:
+                self.active = False
