@@ -13,12 +13,15 @@ curr_window = MenuWindow(h, w, screen)
 
 while curr_window.game_on:
     if curr_window.change_window:
-        menu_boxes_val = curr_window.get_boxes_vals()
-        curr_window = GridWindow(h, w, screen,
-                                 curr_window.grid_size_input_box.get_value(),
-                                 display_offset=40,
-                                 render_cooldown=curr_window.render_time_input_box.get_value(),
-                                 **menu_boxes_val)
+        if isinstance(curr_window, MenuWindow):
+            menu_boxes_val = curr_window.get_boxes_vals()
+            curr_window = GridWindow(h, w, screen,
+                                     curr_window.grid_size_input_box.get_value(),
+                                     display_offset=40,
+                                     render_cooldown=curr_window.render_time_input_box.get_value(),
+                                     **menu_boxes_val)
+        else:
+            curr_window = MenuWindow(h, w, screen)
 
     curr_window.render()
 

@@ -81,6 +81,10 @@ class GridWindow(Window):
 
     def update(self, event):
         super().update(event)
+        self.in_game_menu.handle_event(event)
+
+        if self.in_game_menu.stop_game:
+            self.change_window = True
 
     def render(self) -> None:
         now_tick = pg.time.get_ticks()

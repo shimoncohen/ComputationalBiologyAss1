@@ -9,10 +9,11 @@ COLOR_ACTIVE = pg.Color('dodgerblue2')
 
 
 class Button:
-    def __init__(self, x, y, w, h, font_size=32, label=''):
+    def __init__(self, x, y, w, h, font_size=32, label='', label_x_offset=0):
         self.rect = pg.Rect(x, y, w, h)
         self.color = RED_COLOR
         self.label = label
+        self.label_x_offset = label_x_offset
         self.font_size = font_size
         self.font = pg.font.Font(None, self.font_size)
         self.label_surface = self.font.render(self.label, True, WHITE_COLOR)
@@ -23,7 +24,7 @@ class Button:
         pg.draw.rect(screen, self.color, self.rect, border_radius=5)
         # Blit the text.
         screen.blit(self.label_surface,
-                    (self.rect.x+self.rect.w/2 - self.font_size,
+                    (self.rect.x+self.rect.w/2 - self.font_size + self.label_x_offset,
                      self.rect.y+self.rect.h/2 - self.font_size/2)
                     )
 
