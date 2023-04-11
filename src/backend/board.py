@@ -67,11 +67,15 @@ class Board:
         history_item = RumorHistoryItem(people_counts, rumor_counts)
         self.__history.record(history_item)
     
-    def run_once(self) -> None:
+    def run_once(self) -> bool:
         self.__update_cooldown()
-        self.__rumor_board = self.__game_logic.run_once(self.__people, self.__rumor_board)
+        next = self.__game_logic.run_once(self.__people, self.__rumor_board)
+        if (next == self.__rumor_board).all():
+            return False
+        self.__rumor_board = next
         self.__save_to_history()
         self.__generation += 1
+        return True
     
     def print(self):
         rows, cols = self.__rumor_board.shape
