@@ -276,3 +276,27 @@ class Button(Collidable):
                 self.active = not self.active
             else:
                 self.active = False
+
+
+class ImageButton(Collidable):
+    def __init__(self, x, y, w, h, color, image_path):
+        super(ImageButton, self).__init__(pg.rect.Rect(x, y, w, h))
+        self.color = color
+        self.image = pg.image.load(image_path).convert_alpha()
+        self.active = False
+
+    def draw(self, screen):
+        img_rect = self.image.get_rect()
+        img_rect.center = (self.rect.x + self.rect.w / 2, self.rect.y + self.rect.h / 2)
+
+        pg.draw.rect(screen, self.color, self.rect, border_radius=3)
+        screen.blit(self.image, img_rect)
+
+    def handle_event(self, event):
+        if event.type == pg.MOUSEBUTTONDOWN:
+            # If the user clicked on the input_box rect.
+            if self.rect.collidepoint(event.pos):
+                # Toggle the active variable.
+                self.active = not self.active
+            else:
+                self.active = False

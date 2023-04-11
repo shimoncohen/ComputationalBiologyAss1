@@ -88,6 +88,9 @@ class GridWindow(Window):
         if self.in_game_menu.stop_game:
             self.change_window = True
 
+        if self.in_game_menu.save_history_button.active:
+            self.board.save_history('output.csv')
+
         cols = self.get_collisions(event)
         self.change_cursor(cols)
 
@@ -106,5 +109,6 @@ class GridWindow(Window):
     def get_collisions(self, event) -> List[bool]:
         cols = []
         cols.append(self.in_game_menu.back_to_menu_button.get_collision(event))
+        cols.append(self.in_game_menu.save_history_button.get_collision(event))
 
         return cols

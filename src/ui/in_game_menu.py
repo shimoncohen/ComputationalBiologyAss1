@@ -1,7 +1,7 @@
 import pygame as pg
 
-from .graphics_utils import Button
-from .colors import BLACK_COLOR
+from src.ui.graphics_utils import Button, ImageButton
+from src.ui.colors import BLACK_COLOR, GREY_COLOR
 
 
 class InGameMenu:
@@ -20,8 +20,12 @@ class InGameMenu:
         self.menu_rect_surface = pg.Rect(0, 0, w, display_offset)
         self.color = color
         self.back_to_menu_button = Button(
-            self.w / 2, self.h / 4, self.w / 4, 2 * self.h / 3,
+            self.w / 2, self.h / 4 - 5, self.w / 4, 3 * self.h / 4,
             font_size=30, label="Main Menu", label_x_offset=-20, label_y_offset=10,
+        )
+        self.save_history_button = ImageButton(
+            3 * self.w / 4 + 50, self.h / 4 - 5, 30, 30,
+            GREY_COLOR, 'assets/save_icon_30x30.png'
         )
         self.stop_game = False
 
@@ -30,9 +34,11 @@ class InGameMenu:
 
         screen.blit(self.generations_txt_surface, (self.h / 2 - 5, self.h / 2 - 5))
         self.back_to_menu_button.draw(screen)
+        self.save_history_button.draw(screen)
 
     def handle_event(self, event):
         self.back_to_menu_button.handle_event(event)
+        self.save_history_button.handle_event(event)
 
     def update(self):
         self.generations += 1
