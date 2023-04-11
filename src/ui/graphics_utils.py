@@ -225,8 +225,9 @@ class FilePrompt(Collidable):
         top = tkinter.Tk()
         top.withdraw()  # hide window
         file_name = filedialog.asksaveasfile(
-            defaultextension='.csv',
+            defaultextension='.xlsx',
             filetypes=[
+                ('Excel file', '.xlsx'),
                 ('CSV file', '.csv'),
                 ('All files', '.*')
             ],
