@@ -7,6 +7,7 @@ RED_COLOR = pg.color.Color('#FF0000')
 GREEN_COLOR = pg.color.Color('#00FF00')
 BLUE_COLOR = pg.color.Color('#0000FF')
 YELLOW_COLOR = pg.color.Color('#FFFF00')
+GREY_COLOR = pg.color.Color('azure2')
 
 COLOR_INACTIVE = pg.Color('lightskyblue3')
 COLOR_ACTIVE = pg.Color('dodgerblue2')
