@@ -25,7 +25,7 @@ class InGameMenu:
         )
         self.save_history_button = ImageButton(
             3 * self.w / 4 + 50, self.h / 4 - 5, 30, 30,
-            GREY_COLOR, 'assets/save_icon_30x30.png'
+            GREY_COLOR, 'src/assets/save_icon_30x30.png'
         )
         self.stop_game = False
 

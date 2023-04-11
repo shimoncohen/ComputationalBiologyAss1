@@ -6,7 +6,7 @@ from src.ui.colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR, YELL
 from src.backend.board import Board
 from src.ui.in_game_menu import InGameMenu
 from src.backend.person import DoubtLevel
-from ui.graphics_utils import FilePrompt
+from src.ui.graphics_utils import FilePrompt
 
 
 class GridWindow(Window):
