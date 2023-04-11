@@ -40,9 +40,9 @@ class InGameMenu:
         self.back_to_menu_button.handle_event(event)
         self.save_history_button.handle_event(event)
 
+        if self.back_to_menu_button.active:
+            self.stop_game = True
+
     def update(self):
         self.generations += 1
         self.generations_txt_surface = self.font.render(f'Gen: {self.generations}', True, BLACK_COLOR)
-
-        if self.back_to_menu_button.active:
-            self.stop_game = True
