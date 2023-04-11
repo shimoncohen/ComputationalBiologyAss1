@@ -45,10 +45,10 @@ class MenuWindow(Window):
         ]
 
         self.perc_input_boxes = [
-            self.s4_perc_input_box,
-            self.s3_perc_input_box,
+            self.s1_perc_input_box,
             self.s2_perc_input_box,
-            self.s1_perc_input_box
+            self.s3_perc_input_box,
+            self.s4_perc_input_box,
         ]
 
         self.start_button = Button(200, 400, 150, 100, label='START')
