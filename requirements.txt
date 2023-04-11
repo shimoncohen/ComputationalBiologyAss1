@@ -1,4 +1,7 @@
-numpy
-pygame
-pytest=7.2.2
+numpy>=1.24.2
+pygame>=2.3.0
+pandas>=2.0.0
+matplotlib>=3.7.1
+xlsxwriter>=3.0.9
+pytest>=7.2.2
 pyfakefs=5.2.0
