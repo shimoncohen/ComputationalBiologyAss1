@@ -24,14 +24,14 @@ class MenuWindow(Window):
                                               text_font_size=32)
         self.checkbox = CheckBox(220, 180, 40, 40, 32, BLACK_COLOR, label='Wrap Around: ')
         self.neighbors_dropdown = DropDown(
-            50, 240, 200, 30,
+            50, 290, 200, 30,
             pg.font.Font(None, 20),
             [COLOR_INACTIVE, COLOR_ACTIVE],
             [COLOR_LIST_INACTIVE, COLOR_LIST_ACTIVE],
             "Neighbors Mode: ",
             ["All", "Cross", "Diagonal"])
         self.fileprompt = FilePrompt(
-            160, 290, 180, 30,
+            160, 240, 180, 30,
             font_size=20,
             color=WHITE_COLOR,
             label="Click to load file: "

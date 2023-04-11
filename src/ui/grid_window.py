@@ -90,7 +90,10 @@ class GridWindow(Window):
             self.change_window = True
 
         if self.in_game_menu.save_history_button.active:
-            self.board.save_history(FilePrompt.prompt_save_file())
+            try:
+                self.board.save_history(FilePrompt.prompt_save_file())
+            except Exception:
+                pass
             self.in_game_menu.save_history_button.deactivate()
 
         cols = self.get_collisions(event)
