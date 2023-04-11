@@ -19,15 +19,19 @@ class GridWindow(Window):
                  **kwargs
                  ):
         super().__init__(h, w, screen)
-        self.n_blocks = int(num_blocks)
+        self.n_blocks_w = int(num_blocks)
+        self.n_blocks_h = int(num_blocks)
         self.display_offset = display_offset
         self.board = Board(kwargs['wrap_around'], kwargs['neighbour_count_type'])
         if 'config_file_path' in kwargs:
             self.board.load(kwargs['config_file_path'])
+            n_rows, n_cols = self.board.shape
+            self.n_blocks_w = n_cols
+            self.n_blocks_h = n_rows
         else:
-            self.board.initialize(self.n_blocks, self.n_blocks, kwargs['L'], kwargs['P'], kwargs['doubt_probs'])
-        self.block_h = int((self.h - self.display_offset) / self.n_blocks)
-        self.block_w = int(self.w / self.n_blocks)
+            self.board.initialize(self.n_blocks_h, self.n_blocks_w, kwargs['L'], kwargs['P'], kwargs['doubt_probs'])
+        self.block_h = int((self.h - self.display_offset) / self.n_blocks_h)
+        self.block_w = int(self.w / self.n_blocks_w)
         self.change_window = False
         self.in_game_menu = InGameMenu(26, self.display_offset, w, YELLOW_COLOR)
         self.person_font = pg.font.Font(None, 14)
@@ -39,7 +43,7 @@ class GridWindow(Window):
         self.screen.fill(WHITE_COLOR)
         self._color_people()
         self._color_rumors()
-        if self.n_blocks <= 40:
+        if self.n_blocks_h <= 40 or self.n_blocks_w <= 40:
             self._render_doubt_level()
 
     def _render_doubt_level(self) -> None:
