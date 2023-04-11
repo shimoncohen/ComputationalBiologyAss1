@@ -1,10 +1,10 @@
 import string
 import tkinter
-import pygame as pg
 from tkinter import filedialog
 from typing import List
+import pygame as pg
 from src.ui.colors import BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE, RED_COLOR, WHITE_COLOR
-from .shapes import Collidable
+from src.ui.shapes import Collidable
 
 
 class InputBox(Collidable):
@@ -185,7 +185,7 @@ class DropDown(Collidable):
         return 'neighbour_count_type'
 
 
-class FileLoader(Collidable):
+class FilePrompt(Collidable):
     def __init__(self,
                  x: int,
                  y: int,
@@ -195,7 +195,7 @@ class FileLoader(Collidable):
                  color: pg.color.Color,
                  label: str
                  ):
-        super(FileLoader, self).__init__(pg.Rect(x, y, h, w))
+        super(FilePrompt, self).__init__(pg.Rect(x, y, h, w))
         self.x = x
         self.y = y
         self.h = h
@@ -209,13 +209,31 @@ class FileLoader(Collidable):
         self.label_surface = self.font.render(self.label, True, BLACK_COLOR)
         self.value = ''
 
-    def prompt_file(self) -> str:
+    @staticmethod
+    def prompt_open_file() -> str:
         """Create a Tk file dialog and cleanup when finished"""
         top = tkinter.Tk()
         top.withdraw()  # hide window
         file_name = filedialog.askopenfilename(parent=top)
         top.destroy()
         return file_name
+
+
+    @staticmethod
+    def prompt_save_file() -> str:
+        """Create a Tk file dialog and cleanup when finished"""
+        top = tkinter.Tk()
+        top.withdraw()  # hide window
+        file_name = filedialog.asksaveasfile(
+            defaultextension='.csv',
+            filetypes=[
+                ('CSV file', '.csv'),
+                ('All files', '.*')
+            ],
+            parent=top
+        )
+        top.destroy()
+        return file_name.name
 
     def draw(self, screen):
         # Blit the rect.
@@ -233,7 +251,7 @@ class FileLoader(Collidable):
             mpos = pg.mouse.get_pos()
 
             if self.rect.collidepoint(mpos):
-                self.value = self.prompt_file()
+                self.value = FilePrompt.prompt_open_file()
                 self.txt = self.value.split('/')[-1]
                 self.txt_surface = self.font.render(self.txt, True, BLACK_COLOR)
 
@@ -300,3 +318,6 @@ class ImageButton(Collidable):
                 self.active = not self.active
             else:
                 self.active = False
+
+    def deactivate(self):
+        self.active = False

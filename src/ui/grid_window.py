@@ -1,11 +1,12 @@
 from typing import List
 
 import pygame as pg
-from .window import Window
-from .colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR, YELLOW_COLOR
+from src.ui.window import Window
+from src.ui.colors import BLACK_COLOR, WHITE_COLOR, RED_COLOR, GREEN_COLOR, YELLOW_COLOR
 from src.backend.board import Board
-from .in_game_menu import InGameMenu
+from src.ui.in_game_menu import InGameMenu
 from src.backend.person import DoubtLevel
+from ui.graphics_utils import FilePrompt
 
 
 class GridWindow(Window):
@@ -89,7 +90,8 @@ class GridWindow(Window):
             self.change_window = True
 
         if self.in_game_menu.save_history_button.active:
-            self.board.save_history('output.csv')
+            self.board.save_history(FilePrompt.prompt_save_file())
+            self.in_game_menu.save_history_button.deactivate()
 
         cols = self.get_collisions(event)
         self.change_cursor(cols)
@@ -99,7 +101,7 @@ class GridWindow(Window):
 
         if now_tick - self.curr_tick >= self.render_cooldown:
             if self.should_run:
-                self.board.run_once()
+                self.should_run = self.board.run_once()
                 self.in_game_menu.update()
 
             self.draw_grid()

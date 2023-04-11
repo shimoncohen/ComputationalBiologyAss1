@@ -2,9 +2,9 @@ from typing import List
 
 import pygame as pg
 
-from .window import Window
-from .graphics_utils import InputBox, CheckBox, DropDown, FileLoader, Button
-from .colors import WHITE_COLOR, BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE, COLOR_LIST_ACTIVE, COLOR_LIST_INACTIVE
+from src.ui.window import Window
+from src.ui.graphics_utils import InputBox, CheckBox, DropDown, FilePrompt, Button
+from src.ui.colors import WHITE_COLOR, BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE, COLOR_LIST_ACTIVE, COLOR_LIST_INACTIVE
 
 
 class MenuWindow(Window):
@@ -30,7 +30,7 @@ class MenuWindow(Window):
             [COLOR_LIST_INACTIVE, COLOR_LIST_ACTIVE],
             "Neighbors Mode: ",
             ["All", "Cross", "Diagonal"])
-        self.fileloader = FileLoader(
+        self.fileprompt = FilePrompt(
             160, 290, 180, 30,
             font_size=20,
             color=WHITE_COLOR,
@@ -41,7 +41,7 @@ class MenuWindow(Window):
             self.L_input_box,
             self.p_input_box,
             self.grid_size_input_box,
-            self.fileloader
+            self.fileprompt
         ]
 
         self.perc_input_boxes = [
