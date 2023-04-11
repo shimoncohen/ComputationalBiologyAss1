@@ -27,6 +27,10 @@ class Board:
     @property
     def people(self):
         return self.__people
+    
+    @property
+    def shape(self):
+        return self.__rumor_board.shape
 
     def initialize(self, rows: int, cols: int, L: int, p: float, doubt_probs: list[int]) -> None:
         if math.ceil(sum(doubt_probs)) > 1:
