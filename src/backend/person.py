@@ -32,7 +32,8 @@ class DoubtLevel(IntEnum):
 class Person:
     def __init__(self, doubt_level: DoubtLevel, cooldown_time: int) -> None:
         self.__doubt_level = doubt_level
-        self.__cooldown_time = cooldown_time
+        # Cooldown should take into account the next generation in which the rumor is passed
+        self.__cooldown_time = cooldown_time + 1
         self.__cooldown = 0
     
     @property
