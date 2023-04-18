@@ -23,7 +23,7 @@ class History(Generic[T]):
         # TODO: move logic to somewhere specific
         csv_lines = StringIO('\n'.join(self.get_history_csv()))
         df = pd.read_csv(csv_lines, header='infer')
-        df['total_rumor_percentage'] = df['total_rumors'].values / df['total_people'].values
+        df['total_rumor_percentage'] = (df['total_rumors'].values / df['total_people'].values) * 100
 
         ax = plt.gca()
         df.plot(kind='line', xlabel='generation', ylabel='count', y='total_rumors', ax=ax)
