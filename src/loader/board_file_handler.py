@@ -1,17 +1,18 @@
 import os
 import numpy as np
+from typing import List ,Tuple
 from src.backend.person import Person
 from utils.person import people_to_doubt_level
 
 class BoardFileData:
     def __init__(self, cooldown, people, rumor_board) -> None:
         self.cooldown: str = cooldown
-        self.people: list(str) = people
-        self.rumor_board: list(str) = rumor_board
+        self.people: List[str] = people
+        self.rumor_board: List[str] = rumor_board
 
 class BoardFileHandler:
     @staticmethod
-    def is_data_valid(groups) -> tuple[bool, str]:
+    def is_data_valid(groups) -> Tuple[bool, str]:
         if len(groups) < 3 or len(groups[0]) == 0 or len(groups[1]) == 0 or len(groups[2]) == 0:
             return 'File does not contain all of the needed data: cooldown, people, rumors'
         
@@ -50,7 +51,7 @@ class BoardFileHandler:
         return BoardFileData(''.join(groups[0][0]), groups[1], groups[2])
 
     @staticmethod
-    def load(path: str) -> tuple[np.array, np.array, bool]:
+    def load(path: str) -> Tuple[np.array, np.array, bool]:
         board_data: BoardFileData = BoardFileHandler.read_data(path)
         cooldown = int(board_data.cooldown)
 

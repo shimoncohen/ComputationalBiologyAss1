@@ -6,6 +6,7 @@ from src.history.history import History
 from src.backend.game_logic import GameLogic, NeighbourCountType
 from src.loader.board_file_handler import BoardFileHandler
 from utils.person import count_rumors_by_people, people_to_doubt_level
+from typing import List
 
 class Board:
     def __init__(self, wrap_around: bool, neighbour_count_type: NeighbourCountType) -> None:
@@ -32,7 +33,7 @@ class Board:
     def shape(self):
         return self.__rumor_board.shape
 
-    def initialize(self, rows: int, cols: int, L: int, p: float, doubt_probs: list[int]) -> None:
+    def initialize(self, rows: int, cols: int, L: int, p: float, doubt_probs: List[int]) -> None:
         if math.ceil(sum(doubt_probs)) > 1:
             raise Exception('doubt probabilities should sum up to 1')
         

@@ -1,6 +1,6 @@
 import random
 import numpy as np
-from typing import Callable
+from typing import Callable, List
 from enum import IntEnum
 from src.backend.dimensions import clip, wrap
 from src.backend.person import DoubtLevel, Person
@@ -25,7 +25,7 @@ class GameLogic:
         self.__idx_fix_func: callable = wrap if self.__wrap_around else clip
         self.__neighbour_count_strategy: Callable[[int, int, int, int], bool] = NeighbourCountType.get_strategy(neighbour_count_type)
     
-    def initialize_people(self, people: np.array, p: int, L:int, doubt_probs: list[int]):
+    def initialize_people(self, people: np.array, p: int, L:int, doubt_probs: List[int]):
         rows, cols = people.shape
         for r in range(rows):
             for c in range(cols):
@@ -34,7 +34,7 @@ class GameLogic:
                     doubt_level = self._generate_doubt_level(doubt_probs)
                     people[r, c] = Person(doubt_level, L)
     
-    def _generate_doubt_level(self, doubt_probs: list[int]) -> DoubtLevel:
+    def _generate_doubt_level(self, doubt_probs: List[int]) -> DoubtLevel:
         doubt_level = random.choices([d.value for d in DoubtLevel], weights=doubt_probs)[0]
         return DoubtLevel(doubt_level)
 
