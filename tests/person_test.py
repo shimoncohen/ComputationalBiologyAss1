@@ -44,7 +44,7 @@ class TestPerson:
         p = Person(doubt_level, cooldown)
         p.activate_cooldown()
 
-        for _ in range(cooldown):
+        for _ in range(cooldown + 1):
             assert p.should_pass_rumor(num_neighbours) == False
             p.update_cooldown()
         assert p.should_pass_rumor(num_neighbours) == ans_after_cooldown
