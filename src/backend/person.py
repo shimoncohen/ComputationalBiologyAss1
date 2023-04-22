@@ -35,6 +35,7 @@ class Person:
         # Cooldown should take into account the next generation in which the rumor is passed
         self.__cooldown_time = cooldown_time + 1
         self.__cooldown = 0
+        self.__has_been_affected = False
     
     @property
     def doubt_level(self):
@@ -43,6 +44,10 @@ class Person:
     @property
     def cooldown(self):
         return self.__cooldown
+    
+    @property
+    def has_been_affected(self):
+        return self.__has_been_affected
 
     def should_pass_rumor(self, num_neighbours: int) -> bool:
         p = random.uniform(0, 1)
@@ -58,6 +63,7 @@ class Person:
 
     def activate_cooldown(self):
         self.__cooldown = self.__cooldown_time
+        self.__has_been_affected = True
 
     def update_cooldown(self):
         if self.__cooldown > 0:

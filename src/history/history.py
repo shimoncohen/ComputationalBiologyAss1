@@ -24,6 +24,7 @@ class History(Generic[T]):
         csv_lines = StringIO('\n'.join(self.get_history_csv()))
         df = pd.read_csv(csv_lines, header='infer')
         df['total_rumor_percentage'] = (df['total_rumors'].values / df['total_people'].values) * 100
+        df['total_affected_percentage'] = (df['total_affected'].values / df['total_people'].values) * 100
 
         ax = plt.gca()
         df.plot(kind='line', xlabel='generation', ylabel='count', y='total_rumors', ax=ax)
@@ -39,9 +40,14 @@ class History(Generic[T]):
 
         ax.yaxis.set_major_formatter(mtick.PercentFormatter())
         df.plot(kind='line', xlabel='generation', y='total_rumor_percentage', ax=ax)
-        
         buffer2 = io.BytesIO()
         plt.savefig(buffer2, format='png')
+        plt.cla()
+
+        ax.yaxis.set_major_formatter(mtick.PercentFormatter())
+        df.plot(kind='line', xlabel='generation', y='total_affected_percentage', ax=ax)
+        buffer3 = io.BytesIO()
+        plt.savefig(buffer3, format='png')
         plt.cla()
 
         # Create parent directories
@@ -52,6 +58,7 @@ class History(Generic[T]):
         # From: https://xlsxwriter.readthedocs.io/worksheet.html#insert_image
         worksheet.insert_image('N1', 'image.png', {'image_data': buffer1})
         worksheet.insert_image('N25', 'image.png', {'image_data': buffer2})
+        worksheet.insert_image('N50', 'image.png', {'image_data': buffer3})
         writer.close()
 
 

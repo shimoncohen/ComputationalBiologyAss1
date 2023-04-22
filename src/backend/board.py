@@ -30,8 +30,16 @@ class Board:
         return self.__people
     
     @property
+    def total_affected(self):
+        return self.__game_logic.get_total_affected(self.people)
+
+    @property
     def shape(self):
         return self.__rumor_board.shape
+    
+    @property
+    def size(self):
+        return self.__rumor_board.size
 
     def initialize(self, rows: int, cols: int, L: int, p: float, doubt_probs: List[int]) -> None:
         if math.ceil(sum(doubt_probs)) > 1:
@@ -69,7 +77,7 @@ class Board:
         num_bins = range(1, len(DoubtLevel) + 2)
         people_counts = np.histogram(people_by_doubt_level, num_bins)[0]
         rumor_counts = count_rumors_by_people(self.rumor_board, people_by_doubt_level)
-        history_item = RumorHistoryItem(people_counts, rumor_counts)
+        history_item = RumorHistoryItem(people_counts, rumor_counts, self.total_affected)
         self.__history.record(history_item)
     
     def run_once(self) -> bool:

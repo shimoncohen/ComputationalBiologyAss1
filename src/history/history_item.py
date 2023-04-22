@@ -10,7 +10,7 @@ class HistoryItemInterface:
 
 
 class RumorHistoryItem(HistoryItemInterface):
-    def __init__(self, s_counts, s_rumor_counts) -> None:
+    def __init__(self, s_counts, s_rumor_counts, total_affected) -> None:
         super().__init__()
 
         self.__s_counts = s_counts
@@ -18,12 +18,14 @@ class RumorHistoryItem(HistoryItemInterface):
 
         self.__s_rumor_counts = s_rumor_counts
         self.__total_rumors = sum(self.__s_rumor_counts)
+
+        self.__total_affected = total_affected
     
     @staticmethod
     def get_csv_header_row() -> str:
-        return 'total_people,s1_count,s2_count,s3_count,s4_count,total_rumors,s1_rumors,s2_rumors,s3_rumors,s4_rumors'
+        return 'total_people,s1_count,s2_count,s3_count,s4_count,total_rumors,s1_rumors,s2_rumors,s3_rumors,s4_rumors,total_affected'
 
     def get_as_csv_row(self) -> str:
         people_str = ",".join(map(str, self.__s_counts))
         rumor_str = ",".join(map(str, self.__s_rumor_counts))
-        return f'{self.__total_people},{people_str},{self.__total_rumors},{rumor_str}'
+        return f'{self.__total_people},{people_str},{self.__total_rumors},{rumor_str},{self.__total_affected}'

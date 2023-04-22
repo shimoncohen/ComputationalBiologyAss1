@@ -11,13 +11,12 @@ class NeighbourCountType(IntEnum):
     DIAGONAL = 2
 
     def get_strategy(neighbour_count_type: int) -> Callable[[int, int, int, int], bool]:
-        match neighbour_count_type:
-            case 1:
-                return lambda row, col, r, c: r == row or c == col
-            case 2:
-                return lambda row, col, r, c: r != row and c != col
-            case _:
-                return lambda row, col, r, c: r != row or c != col
+        if neighbour_count_type == 1:
+            return lambda row, col, r, c: r == row or c == col
+        elif neighbour_count_type == 2:
+            return lambda row, col, r, c: r != row and c != col
+        
+        return lambda row, col, r, c: r != row or c != col
 
 class GameLogic:
     def __init__(self, wrap_around: bool, neighbour_count_type: NeighbourCountType) -> None:
@@ -31,10 +30,13 @@ class GameLogic:
             for c in range(cols):
                 prob = random.uniform(0, 1)
                 if prob <= p:
-                    doubt_level = self._generate_doubt_level(doubt_probs)
+                    doubt_level = self.__generate_doubt_level(doubt_probs)
                     people[r, c] = Person(doubt_level, L)
+
+    def get_total_affected(self, people: np.array) -> int:
+        return np.array([people[r, c].has_been_affected for r, c in np.ndindex(people.shape) if people[r, c]]).sum()
     
-    def _generate_doubt_level(self, doubt_probs: List[int]) -> DoubtLevel:
+    def __generate_doubt_level(self, doubt_probs: List[int]) -> DoubtLevel:
         doubt_level = random.choices([d.value for d in DoubtLevel], weights=doubt_probs)[0]
         return DoubtLevel(doubt_level)
 
