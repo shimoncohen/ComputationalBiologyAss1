@@ -108,6 +108,31 @@ class MenuWindow(Window):
         d.update({self.neighbors_dropdown.get_name(): self.neighbors_dropdown.get_value()})
         return d
 
+    def validate_positive(self):
+        d = self.get_boxes_vals()
+        d.update({'Time': self.render_time_input_box.get_value()})
+
+        for name, val in d.items():
+            if name == 'None' or val is None:
+                continue
+
+            if type(val) not in [int, float, list]:
+                 continue
+
+            if isinstance(val, list):
+                for v in val:
+                    if v <= 0:
+                        return False
+            else:
+                thresh = 0
+                if name == 'L':
+                    thresh = -1
+                if val <= thresh:
+                    return False
+
+
+        return True
+
     def get_collisions(self, event) -> List[bool]:
         cols = []
         for box in self.input_boxes:
