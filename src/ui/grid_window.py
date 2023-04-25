@@ -107,13 +107,13 @@ class GridWindow(Window):
         now_tick = pg.time.get_ticks()
 
         if now_tick - self.curr_tick >= self.render_cooldown:
-            if self.should_run:
-                self.should_run = self.board.run_once()
-                self.in_game_menu.update()
-
             self.draw_grid()
             self.in_game_menu.draw(self.screen)
             self.curr_tick = now_tick
+
+            if self.should_run:
+                self.should_run = self.board.run_once()
+                self.in_game_menu.update()
 
     def get_collisions(self, event) -> List[bool]:
         cols = []

@@ -24,8 +24,8 @@ while curr_window.game_on:
             curr_window = MenuWindow(h, w, screen)
 
     curr_window.render()
+    pygame.display.flip()
 
     for event in pygame.event.get():
         curr_window.update(event)
 
-    pygame.display.flip()
