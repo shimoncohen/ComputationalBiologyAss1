@@ -1,4 +1,5 @@
 import string
+import time
 import tkinter
 from tkinter import filedialog
 from typing import List
@@ -24,6 +25,7 @@ class InputBox(Collidable):
         self.label_y_offset = label_y_offset
         self.active = False
         self.value = 0
+        self.cursor = pg.Rect(self.txt_surface.get_rect().topright, (3, self.txt_surface.get_rect().height + 2))
 
     def handle_event(self, event) -> None:
         if event.type == pg.MOUSEBUTTONDOWN:
@@ -56,6 +58,17 @@ class InputBox(Collidable):
         screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
         # Blit the rect.
         pg.draw.rect(screen, self.color, self.rect, 2, border_radius=7)
+
+        if self.active:
+            if time.time() % 1 > 0.5:
+
+                # bounding rectangle of the text
+                text_rect = self.txt_surface.get_rect(topleft=(self.rect.x + 5, self.rect.y + 5))
+
+                # set cursor position
+                self.cursor.midleft = text_rect.midright
+
+                pg.draw.rect(screen, self.color, self.cursor)
 
     def set_value(self) -> None:
         try:
