@@ -106,7 +106,6 @@ class MenuWindow(Window):
         d.update(self.checkbox.get_status())
         d.update({'doubt_probs': [b.get_value() for b in self.perc_input_boxes]})
         d.update({self.neighbors_dropdown.get_name(): self.neighbors_dropdown.get_value()})
-        print(d)
         return d
 
     def get_collisions(self, event) -> List[bool]:
@@ -122,3 +121,7 @@ class MenuWindow(Window):
         cols.append(self.start_button.get_collision(event))
 
         return cols
+
+    def reset_buttons_status(self):
+        self.change_window = False
+        self.start_button.active = False

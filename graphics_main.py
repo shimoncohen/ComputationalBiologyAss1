@@ -15,6 +15,11 @@ while curr_window.game_on:
     if curr_window.change_window:
         if isinstance(curr_window, MenuWindow):
             menu_boxes_val = curr_window.get_boxes_vals()
+
+            if sum(menu_boxes_val['doubt_probs']) != 1:
+                curr_window.reset_buttons_status()
+                continue
+
             curr_window = GridWindow(h, w, screen,
                                      curr_window.grid_size_input_box.get_value(),
                                      display_offset=40,
