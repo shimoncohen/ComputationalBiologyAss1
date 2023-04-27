@@ -121,7 +121,7 @@ class MenuWindow(Window):
 
             if isinstance(val, list):
                 for v in val:
-                    if v <= 0:
+                    if v < 0:
                         return False
             else:
                 thresh = 0
@@ -129,7 +129,6 @@ class MenuWindow(Window):
                     thresh = -1
                 if val <= thresh:
                     return False
-
 
         return True
 
