@@ -9,6 +9,9 @@ from utils.person import count_rumors_by_people, people_to_doubt_level
 from typing import List
 
 class Board:
+    """
+    Holds the simulation layout.
+    """
     def __init__(self, wrap_around: bool, neighbour_count_type: NeighbourCountType) -> None:
         self.__game_logic = GameLogic(wrap_around, neighbour_count_type)
         self.__history: History[RumorHistoryItem] = History[RumorHistoryItem]()
@@ -42,8 +45,24 @@ class Board:
         return self.__rumor_board.size
 
     def initialize(self, rows: int, cols: int, L: int, p: float, doubt_probs: List[int]) -> None:
+        """
+        Initialize the board with given parameters.
+
+        Args:
+            rows (int): num of rows in the board
+            cols (int): num of columns in the board
+            L (int): number of generations a person should not pass a rumor after receiving one
+            p (float): wanted pupulation density
+            doubt_probs (List[int]): propabilities for each doubt level
+
+        Raises:
+            Exception: raised if doubt probabilities do not sum up to 1
+            Exception: raised if p > 1 or p < 0
+        """
         if math.ceil(sum(doubt_probs)) > 1:
             raise Exception('doubt probabilities should sum up to 1')
+        if p > 1 or p < 0:
+            raise Exception('population density cannot be greater than 1')
         
         self.__rumor_board = np.full((rows, cols), False)
         self.__people = np.full((rows, cols), None)
@@ -65,6 +84,9 @@ class Board:
         BoardFileHandler.save(path, self.L, self.__rumor_board, self.__people)
     
     def __update_cooldown(self):
+        """
+        Update the cooldown of all the people in the board.
+        """
         rows, cols = self.__people.shape
         for r in range(rows):
             for c in range(cols):
@@ -81,6 +103,12 @@ class Board:
         self.__history.record(history_item)
     
     def run_once(self) -> bool:
+        """
+        Run one round of the simulation.
+
+        Returns:
+            bool: can the simulation continue
+        """
         self.__update_cooldown()
         next = self.__game_logic.run_once(self.__people, self.__rumor_board)
         if (next == self.__rumor_board).all():
@@ -94,8 +122,20 @@ class Board:
         rows, cols = self.__rumor_board.shape
         [print(['x' if self.rumor_board[r, c] else '-' for c in range(cols)]) for r in range(rows)]
     
-    def get_history_csv(self):
+    def get_history_csv(self) -> List[str]:
+        """
+        Get the board history as CSV format.
+
+        Returns:
+            List[str]: history as CSV lines
+        """
         return self.__history.get_history_csv()
     
     def save_history(self, path: str) -> None:
+        """
+        Save board history to file.
+
+        Args:
+            path (str): path to save the file to
+        """
         self.__history.save(path)

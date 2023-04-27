@@ -11,8 +11,20 @@ class BoardFileData:
         self.rumor_board: List[str] = rumor_board
 
 class BoardFileHandler:
+    """
+    Handles the logic for loading and saving board files.
+    """
     @staticmethod
-    def is_data_valid(groups) -> Tuple[bool, str]:
+    def is_data_valid(groups) -> str:
+        """
+        Validate data extracted from a board file.
+
+        Args:
+            groups (_type_): groups of data from a board file
+
+        Returns:
+            str: non emptry string if there was a validation error
+        """
         if len(groups) < 3 or len(groups[0]) == 0 or len(groups[1]) == 0 or len(groups[2]) == 0:
             return 'File does not contain all of the needed data: cooldown, people, rumors'
         

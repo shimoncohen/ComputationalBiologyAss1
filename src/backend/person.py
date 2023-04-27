@@ -50,6 +50,15 @@ class Person:
         return self.__has_been_affected
 
     def should_pass_rumor(self, num_neighbours: int) -> bool:
+        """
+        Decide if the rumor heard should be passed.
+
+        Args:
+            num_neighbours (int): number of neighbours passing the rumor
+
+        Returns:
+            bool: should the rumor be passed on
+        """
         p = random.uniform(0, 1)
         if num_neighbours == 0 or self.__cooldown > 0 or p == 1:
             return False

@@ -1,4 +1,7 @@
 class HistoryItemInterface:
+    """
+    General interface representing an object that can be used as a history item.
+    """
     @staticmethod
     def get_csv_header_row() -> str:
         """Get the header row describing the history item data."""
