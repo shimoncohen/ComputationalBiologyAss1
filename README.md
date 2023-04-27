@@ -85,5 +85,6 @@ Install pyinstaller:
 
 Create executable:
 >```pyinstaller -wF -p src -p utils graphics_main.py```
+
 Copy 'save_icon_30x30.png' from 'src/assets' to 'dist/src/assets'.
 Now you can run the executable.
