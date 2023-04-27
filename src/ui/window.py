@@ -18,11 +18,6 @@ class Window:
 
     def change_cursor(self, collisions: List[bool]) -> None:
         if any(collisions):
-            # if event.type == pg.MOUSEMOTION:
-            #     if self.rect.collidepoint(event.pos):
-            #         pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
-            #     else:
-            #         pg.mouse.set_cursor(pg.SYSTEM_CURSOR_ARROW)
             pg.mouse.set_cursor(pg.SYSTEM_CURSOR_HAND)
         else:
             pg.mouse.set_cursor(pg.SYSTEM_CURSOR_ARROW)

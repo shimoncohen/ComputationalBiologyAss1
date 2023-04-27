@@ -58,13 +58,10 @@ class MenuWindow(Window):
         super().update(event)
         for input_box in self.input_boxes:
             input_box.handle_event(event)
-            input_box.update()
 
         for input_box in self.perc_input_boxes:
             input_box.handle_event(event)
-            input_box.update()
 
-        self.render_time_input_box.update()
         self.neighbors_dropdown.update()
 
         self.checkbox.handle_event(event)
@@ -72,12 +69,7 @@ class MenuWindow(Window):
         self.neighbors_dropdown.handle_event(event)
         self.render_time_input_box.handle_event(event)
 
-        if self.validate_positive():
-            self.start_button.available = True
-        else:
-            self.start_button.available = False
-
-        if 0 <= 1 - sum([box.value for box in self.perc_input_boxes]) < 1e-5:
+        if 0 <= 1 - sum([box.value for box in self.perc_input_boxes]) < 1e-5 and self.validate_positive():
             self.start_button.available = True
         else:
             self.start_button.available = False

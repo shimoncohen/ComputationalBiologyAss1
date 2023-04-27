@@ -48,12 +48,6 @@ class InputBox(Collidable):
 
             self.set_value()
 
-    def update(self) -> None:
-        # Resize the box if the text is too long.
-        # width = max(self.rect.w, self.txt_surface.get_width()+10)
-        # self.rect.w = width
-        pass
-
     def draw(self, screen) -> None:
         # Blit the text.
         screen.blit(self.label_surface, (self.rect.x-self.label_x_offset, self.rect.y+self.label_y_offset))
@@ -259,9 +253,6 @@ class FilePrompt(Collidable):
         # Blit the text.
         screen.blit(self.label_surface, (self.rect.x - 110, self.rect.y + 10))
         screen.blit(self.txt_surface, (self.rect.x + 10, self.rect.y + 10))
-
-    def update(self):
-        pass
 
     def handle_event(self, event):
         if event.type == pg.MOUSEBUTTONDOWN:
