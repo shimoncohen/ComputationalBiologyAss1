@@ -74,3 +74,7 @@ To run in CLI mode run:
 
 To run in GUI mode run:
 >```python graphics_main.py```
+
+## Run tests
+Run:
+>```pytest```
