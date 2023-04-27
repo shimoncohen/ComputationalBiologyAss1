@@ -4,7 +4,7 @@ import pygame as pg
 
 from src.ui.window import Window
 from src.ui.graphics_utils import InputBox, CheckBox, DropDown, FilePrompt, Button
-from src.ui.colors import WHITE_COLOR, BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE, COLOR_LIST_ACTIVE, COLOR_LIST_INACTIVE
+from src.ui.colors import WHITE_COLOR, BLACK_COLOR, COLOR_INACTIVE, COLOR_ACTIVE, COLOR_LIST_ACTIVE, COLOR_LIST_INACTIVE, RED_COLOR, GREY_COLOR
 
 
 class MenuWindow(Window):
@@ -51,7 +51,7 @@ class MenuWindow(Window):
             self.s4_perc_input_box,
         ]
 
-        self.start_button = Button(200, 400, 150, 100, label='START')
+        self.start_button = Button(200, 400, 150, 100, active_color=RED_COLOR, inactive_color=GREY_COLOR, label='START')
         self.change_window = False
 
     def update(self, event):
@@ -71,6 +71,16 @@ class MenuWindow(Window):
         self.start_button.handle_event(event)
         self.neighbors_dropdown.handle_event(event)
         self.render_time_input_box.handle_event(event)
+
+        if self.validate_positive():
+            self.start_button.available = True
+        else:
+            self.start_button.available = False
+
+        if 0 <= 1 - sum([box.value for box in self.perc_input_boxes]) < 1e-5:
+            self.start_button.available = True
+        else:
+            self.start_button.available = False
 
         if self.start_button.active:
             for input_box in self.input_boxes:
@@ -121,12 +131,15 @@ class MenuWindow(Window):
 
             if isinstance(val, list):
                 for v in val:
-                    if v < 0:
+                    if v < 0 or v > 1:
                         return False
             else:
                 thresh = 0
                 if name == 'L':
                     thresh = -1
+                if name == 'P':
+                    if 0 > val or val > 1:
+                        return False
                 if val <= thresh:
                     return False
 
