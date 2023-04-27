@@ -49,24 +49,24 @@ Now should be the rumor board description. Each value represents a corresponding
 - 0 (no rumor)
 - 1 (passing rumor)
 
-Example for a valid board file:\
-1
-
-0000000\
-0222220\
-0222220\
-0222220\
-0222220\
-0222220\
-0000000
-
-0000000\
-0001000\
-0001000\
-0111110\
-0001000\
-0001000\
-0000000
+Example for a valid board file:
+>1
+>
+>0000000\
+>0222220\
+>0222220\
+>0222220\
+>0222220\
+>0222220\
+>0000000
+>
+>0000000\
+>0001000\
+>0001000\
+>0111110\
+>0001000\
+>0001000\
+>0000000
 
 ## Running the program
 To run in CLI mode run:
