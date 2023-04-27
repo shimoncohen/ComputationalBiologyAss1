@@ -17,7 +17,7 @@ while curr_window.game_on:
             menu_boxes_val = curr_window.get_boxes_vals()
 
             if curr_window.validate_positive():
-                if sum(menu_boxes_val['doubt_probs']) == 1:
+                if 0 <= 1 - sum(menu_boxes_val['doubt_probs']) < 1e-5:
                     curr_window = GridWindow(h, w, screen,
                                              curr_window.grid_size_input_box.get_value(),
                                              display_offset=40,

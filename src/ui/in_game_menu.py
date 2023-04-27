@@ -1,7 +1,7 @@
 import pygame as pg
 
 from src.ui.graphics_utils import Button, ImageButton
-from src.ui.colors import BLACK_COLOR, GREY_COLOR
+from src.ui.colors import BLACK_COLOR, GREY_COLOR, RED_COLOR
 
 
 class InGameMenu:
@@ -20,9 +20,9 @@ class InGameMenu:
         self.menu_rect_surface = pg.Rect(0, 0, w, display_offset)
         self.color = color
         self.back_to_menu_button = Button(
-            self.w / 2, self.h / 4 - 5, self.w / 4, 3 * self.h / 4,
+            self.w / 2, self.h / 4 - 5, self.w / 4, 3 * self.h / 4, active_color=RED_COLOR, inactive_color=GREY_COLOR,
             font_size=30, label="Main Menu", label_x_offset=-20, label_y_offset=10,
-        )
+        available=True)
         self.save_history_button = ImageButton(
             3 * self.w / 4 + 50, self.h / 4 - 5, 30, 30,
             GREY_COLOR, 'src/assets/save_icon_30x30.png'

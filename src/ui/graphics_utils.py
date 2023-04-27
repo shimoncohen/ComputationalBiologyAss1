@@ -24,7 +24,7 @@ class InputBox(Collidable):
         self.label_x_offset = label_x_offset
         self.label_y_offset = label_y_offset
         self.active = False
-        self.value = 0
+        self.value = float(text)
         self.cursor = pg.Rect(self.txt_surface.get_rect().topright, (3, self.txt_surface.get_rect().height + 2))
 
     def handle_event(self, event) -> None:
@@ -45,6 +45,8 @@ class InputBox(Collidable):
                     self.text = self.text[:-1]
                 # Re-render the text.
                 self.txt_surface = self.txt_font.render(self.text, True, BLACK_COLOR)
+
+            self.set_value()
 
     def update(self) -> None:
         # Resize the box if the text is too long.
@@ -74,6 +76,7 @@ class InputBox(Collidable):
         try:
             self.value = float(self.text)
         except ValueError:
+            self.value = -1
             return
 
     def get_value(self):
@@ -280,9 +283,11 @@ class FilePrompt(Collidable):
 
 
 class Button(Collidable):
-    def __init__(self, x, y, w, h, font_size=32, label='', label_x_offset=0, label_y_offset=0):
+    def __init__(self, x, y, w, h, active_color: pg.Color, inactive_color: pg.Color,
+                 font_size=32, label='', label_x_offset=0, label_y_offset=0, available=False):
         super(Button, self).__init__(pg.Rect(x, y, w, h))
-        self.color = RED_COLOR
+        self.active_color = active_color
+        self.inactive_color = inactive_color
         self.label = label
         self.label_x_offset = label_x_offset
         self.label_y_offset = label_y_offset
@@ -290,10 +295,14 @@ class Button(Collidable):
         self.font = pg.font.Font(None, self.font_size)
         self.label_surface = self.font.render(self.label, True, WHITE_COLOR)
         self.active = False
+        self.available = available
 
     def draw(self, screen):
         # Blit the rect.
-        pg.draw.rect(screen, self.color, self.rect, border_radius=5)
+        if self.available:
+            pg.draw.rect(screen, self.active_color, self.rect, border_radius=5)
+        else:
+            pg.draw.rect(screen, self.inactive_color, self.rect, border_radius=5)
         # Blit the text.
         screen.blit(self.label_surface,
                     (self.rect.x+self.rect.w/2 - self.font_size + self.label_x_offset,
@@ -304,10 +313,11 @@ class Button(Collidable):
         if event.type == pg.MOUSEBUTTONDOWN:
             # If the user clicked on the input_box rect.
             if self.rect.collidepoint(event.pos):
-                # Toggle the active variable.
-                self.active = not self.active
-            else:
-                self.active = False
+                if self.available:
+                    # Toggle the active variable.
+                    self.active = True
+        else:
+            self.active = False
 
 
 class ImageButton(Collidable):
